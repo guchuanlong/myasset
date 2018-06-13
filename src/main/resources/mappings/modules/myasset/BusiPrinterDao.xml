@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.BusiPrinterDao">
+    
+	<sql id="busiPrinterColumns">
+		a.id AS "id",
+		a.user_id AS "user.id",
+		a.office_id AS "office.id",
+		a.area_id AS "area.id",
+		a.printer_ip AS "printerIp",
+		a.printer_port AS "printerPort",
+		a.printer_name AS "printerName",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		u2.name AS "user.name",
+		o3.name AS "office.name",
+		a4.name AS "area.name"
+	</sql>
+	
+	<sql id="busiPrinterJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.user_id
+		LEFT JOIN sys_office o3 ON o3.id = a.office_id
+		LEFT JOIN sys_area a4 ON a4.id = a.area_id
+	</sql>
+    
+	<select id="get" resultType="BusiPrinter">
+		SELECT 
+			<include refid="busiPrinterColumns"/>
+		FROM busi_printer a
+		<include refid="busiPrinterJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BusiPrinter">
+		SELECT 
+			<include refid="busiPrinterColumns"/>
+		FROM busi_printer a
+		<include refid="busiPrinterJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="user != null and user.id != null and user.id != ''">
+				AND a.user_id = #{user.id}
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
+			</if>
+			<if test="area != null and area.id != null and area.id != ''">
+				AND a.area_id = #{area.id}
+			</if>
+			<if test="printerIp != null and printerIp != ''">
+				AND a.printer_ip = #{printerIp}
+			</if>
+			<if test="printerName != null and printerName != ''">
+				AND a.printer_name = #{printerName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BusiPrinter">
+		SELECT 
+			<include refid="busiPrinterColumns"/>
+		FROM busi_printer a
+		<include refid="busiPrinterJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO busi_printer(
+			id,
+			user_id,
+			office_id,
+			area_id,
+			printer_ip,
+			printer_port,
+			printer_name,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{user.id},
+			#{office.id},
+			#{area.id},
+			#{printerIp},
+			#{printerPort},
+			#{printerName},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE busi_printer SET 	
+			user_id = #{user.id},
+			office_id = #{office.id},
+			area_id = #{area.id},
+			printer_ip = #{printerIp},
+			printer_port = #{printerPort},
+			printer_name = #{printerName},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE busi_printer SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
