@@ -25,7 +25,7 @@ import com.thinkgem.jeesite.modules.myasset.service.BusiPlaceService;
 /**
  * 资产存放地点Controller
  * @author gucl
- * @version 2018-06-13
+ * @version 2018-06-23
  */
 @Controller
 @RequestMapping(value = "${adminPath}/myasset/busiPlace")

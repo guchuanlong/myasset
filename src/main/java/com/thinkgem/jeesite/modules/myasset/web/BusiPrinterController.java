@@ -25,7 +25,7 @@ import com.thinkgem.jeesite.modules.myasset.service.BusiPrinterService;
 /**
  * 打印机Controller
  * @author gucl
- * @version 2018-06-13
+ * @version 2018-06-23
  */
 @Controller
 @RequestMapping(value = "${adminPath}/myasset/busiPrinter")

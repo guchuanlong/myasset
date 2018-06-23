@@ -30,7 +30,7 @@ import com.thinkgem.jeesite.modules.myasset.service.BusiCategoryService;
 /**
  * 资产分类Controller
  * @author gucl
- * @version 2018-06-13
+ * @version 2018-06-23
  */
 @Controller
 @RequestMapping(value = "${adminPath}/myasset/busiCategory")
@@ -89,6 +89,9 @@ public class BusiCategoryController extends BaseController {
 	public String save(BusiCategory busiCategory, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, busiCategory)){
 			return form(busiCategory, model);
+		}
+		if (busiCategory.getSort() == null){
+			busiCategory.setSort(30);
 		}
 		busiCategoryService.save(busiCategory);
 		addMessage(redirectAttributes, "保存资产分类成功");

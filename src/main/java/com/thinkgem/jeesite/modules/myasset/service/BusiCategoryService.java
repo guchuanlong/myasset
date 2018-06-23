@@ -16,7 +16,7 @@ import com.thinkgem.jeesite.modules.myasset.dao.BusiCategoryDao;
 /**
  * 资产分类Service
  * @author gucl
- * @version 2018-06-13
+ * @version 2018-06-23
  */
 @Service
 @Transactional(readOnly = true)

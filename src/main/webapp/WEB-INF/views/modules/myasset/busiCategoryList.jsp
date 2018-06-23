@@ -58,7 +58,6 @@
 		<thead>
 			<tr>
 				<th>名称</th>
-				<th>排序</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="myasset:busiCategory:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -70,9 +69,6 @@
 			<td><a href="${ctx}/myasset/busiCategory/form?id={{row.id}}">
 				{{row.name}}
 			</a></td>
-			<td>
-				{{row.sort}}
-			</td>
 			<td>
 				{{row.updateDate}}
 			</td>

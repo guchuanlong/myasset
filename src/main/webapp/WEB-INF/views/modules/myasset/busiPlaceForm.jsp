@@ -41,10 +41,9 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">归属区域：</label>
+			<label class="control-label">地点编码：</label>
 			<div class="controls">
-				<sys:treeselect id="area" name="area.id" value="${busiPlace.area.id}" labelName="area.name" labelValue="${busiPlace.area.name}"
-					title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
+				<form:input path="code" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

@@ -4,7 +4,6 @@
 package com.thinkgem.jeesite.modules.myasset.entity;
 
 import com.thinkgem.jeesite.modules.sys.entity.Office;
-import com.thinkgem.jeesite.modules.sys.entity.Area;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
@@ -12,13 +11,13 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 资产存放地点Entity
  * @author gucl
- * @version 2018-06-13
+ * @version 2018-06-23
  */
 public class BusiPlace extends DataEntity<BusiPlace> {
 	
 	private static final long serialVersionUID = 1L;
 	private Office office;		// 归属部门
-	private Area area;		// 归属区域
+	private String code;		// 地点编码
 	private String name;		// 地点名称
 	
 	public BusiPlace() {
@@ -37,12 +36,13 @@ public class BusiPlace extends DataEntity<BusiPlace> {
 		this.office = office;
 	}
 	
-	public Area getArea() {
-		return area;
+	@Length(min=0, max=64, message="地点编码长度必须介于 0 和 64 之间")
+	public String getCode() {
+		return code;
 	}
 
-	public void setArea(Area area) {
-		this.area = area;
+	public void setCode(String code) {
+		this.code = code;
 	}
 	
 	@Length(min=0, max=100, message="地点名称长度必须介于 0 和 100 之间")

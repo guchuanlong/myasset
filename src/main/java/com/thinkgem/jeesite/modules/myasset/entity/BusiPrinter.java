@@ -5,7 +5,6 @@ package com.thinkgem.jeesite.modules.myasset.entity;
 
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
-import com.thinkgem.jeesite.modules.sys.entity.Area;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
@@ -13,16 +12,16 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 打印机Entity
  * @author gucl
- * @version 2018-06-13
+ * @version 2018-06-23
  */
 public class BusiPrinter extends DataEntity<BusiPrinter> {
 	
 	private static final long serialVersionUID = 1L;
 	private User user;		// 归属用户
 	private Office office;		// 归属部门
-	private Area area;		// 归属区域
 	private String printerIp;		// 打印机IP
-	private Integer printerPort;		// 打印机端口
+	private String printerPort;		// 打印机端口
+	private String printerCode;		// 打印机编号
 	private String printerName;		// 打印机名称
 	
 	public BusiPrinter() {
@@ -49,14 +48,6 @@ public class BusiPrinter extends DataEntity<BusiPrinter> {
 		this.office = office;
 	}
 	
-	public Area getArea() {
-		return area;
-	}
-
-	public void setArea(Area area) {
-		this.area = area;
-	}
-	
 	@Length(min=0, max=100, message="打印机IP长度必须介于 0 和 100 之间")
 	public String getPrinterIp() {
 		return printerIp;
@@ -66,12 +57,21 @@ public class BusiPrinter extends DataEntity<BusiPrinter> {
 		this.printerIp = printerIp;
 	}
 	
-	public Integer getPrinterPort() {
+	public String getPrinterPort() {
 		return printerPort;
 	}
 
-	public void setPrinterPort(Integer printerPort) {
+	public void setPrinterPort(String printerPort) {
 		this.printerPort = printerPort;
+	}
+	
+	@Length(min=0, max=64, message="打印机编号长度必须介于 0 和 64 之间")
+	public String getPrinterCode() {
+		return printerCode;
+	}
+
+	public void setPrinterCode(String printerCode) {
+		this.printerCode = printerCode;
 	}
 	
 	@Length(min=0, max=100, message="打印机名称长度必须介于 0 和 100 之间")

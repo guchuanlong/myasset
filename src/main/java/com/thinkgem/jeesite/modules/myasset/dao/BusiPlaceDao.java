@@ -10,7 +10,7 @@ import com.thinkgem.jeesite.modules.myasset.entity.BusiPlace;
 /**
  * 资产存放地点DAO接口
  * @author gucl
- * @version 2018-06-13
+ * @version 2018-06-23
  */
 @MyBatisDao
 public interface BusiPlaceDao extends CrudDao<BusiPlace> {

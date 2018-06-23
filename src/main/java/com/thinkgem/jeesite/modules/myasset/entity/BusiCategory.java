@@ -12,7 +12,7 @@ import com.thinkgem.jeesite.common.persistence.TreeEntity;
 /**
  * 资产分类Entity
  * @author gucl
- * @version 2018-06-13
+ * @version 2018-06-23
  */
 public class BusiCategory extends TreeEntity<BusiCategory> {
 	
@@ -58,7 +58,7 @@ public class BusiCategory extends TreeEntity<BusiCategory> {
 		this.name = name;
 	}
 	
-	@NotNull(message="排序不能为空")
+	//@NotNull(message="排序不能为空")
 	public Integer getSort() {
 		return sort;
 	}

@@ -48,13 +48,6 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">归属区域：</label>
-			<div class="controls">
-				<sys:treeselect id="area" name="area.id" value="${busiPrinter.area.id}" labelName="area.name" labelValue="${busiPrinter.area.name}"
-					title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">打印机IP：</label>
 			<div class="controls">
 				<form:input path="printerIp" htmlEscape="false" maxlength="100" class="input-xlarge "/>
@@ -63,7 +56,13 @@
 		<div class="control-group">
 			<label class="control-label">打印机端口：</label>
 			<div class="controls">
-				<form:input path="printerPort" htmlEscape="false" class="input-xlarge  digits"/>
+				<form:input path="printerPort" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">打印机编号：</label>
+			<div class="controls">
+				<form:input path="printerCode" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

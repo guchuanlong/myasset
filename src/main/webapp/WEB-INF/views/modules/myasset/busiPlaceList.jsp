@@ -29,9 +29,8 @@
 				<sys:treeselect id="office" name="office.id" value="${busiPlace.office.id}" labelName="office.name" labelValue="${busiPlace.office.name}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>
-			<li><label>归属区域：</label>
-				<sys:treeselect id="area" name="area.id" value="${busiPlace.area.id}" labelName="area.name" labelValue="${busiPlace.area.name}"
-					title="区域" url="/sys/area/treeData" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
+			<li><label>地点编码：</label>
+				<form:input path="code" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>地点名称：</label>
 				<form:input path="name" htmlEscape="false" maxlength="100" class="input-medium"/>
@@ -45,7 +44,7 @@
 		<thead>
 			<tr>
 				<th>归属部门</th>
-				<th>归属区域</th>
+				<th>地点编码</th>
 				<th>地点名称</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="myasset:busiPlace:edit"><th>操作</th></shiro:hasPermission>
@@ -58,7 +57,7 @@
 					${busiPlace.office.name}
 				</a></td>
 				<td>
-					${busiPlace.area.name}
+					${busiPlace.code}
 				</td>
 				<td>
 					${busiPlace.name}

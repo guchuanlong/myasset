@@ -33,12 +33,14 @@
 				<sys:treeselect id="office" name="office.id" value="${busiPrinter.office.id}" labelName="office.name" labelValue="${busiPrinter.office.name}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>
-			<li><label>归属区域：</label>
-				<sys:treeselect id="area" name="area.id" value="${busiPrinter.area.id}" labelName="area.name" labelValue="${busiPrinter.area.name}"
-					title="区域" url="/sys/area/treeData" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
-			</li>
 			<li><label>打印机IP：</label>
 				<form:input path="printerIp" htmlEscape="false" maxlength="100" class="input-medium"/>
+			</li>
+			<li><label>打印机端口：</label>
+				<form:input path="printerPort" htmlEscape="false" class="input-medium"/>
+			</li>
+			<li><label>打印机编号：</label>
+				<form:input path="printerCode" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>打印机名称：</label>
 				<form:input path="printerName" htmlEscape="false" maxlength="100" class="input-medium"/>
@@ -53,9 +55,9 @@
 			<tr>
 				<th>归属用户</th>
 				<th>归属部门</th>
-				<th>归属区域</th>
 				<th>打印机IP</th>
 				<th>打印机端口</th>
+				<th>打印机编号</th>
 				<th>打印机名称</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="myasset:busiPrinter:edit"><th>操作</th></shiro:hasPermission>
@@ -71,13 +73,13 @@
 					${busiPrinter.office.name}
 				</td>
 				<td>
-					${busiPrinter.area.name}
-				</td>
-				<td>
 					${busiPrinter.printerIp}
 				</td>
 				<td>
 					${busiPrinter.printerPort}
+				</td>
+				<td>
+					${busiPrinter.printerCode}
 				</td>
 				<td>
 					${busiPrinter.printerName}

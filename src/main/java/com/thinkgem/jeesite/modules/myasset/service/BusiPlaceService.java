@@ -16,7 +16,7 @@ import com.thinkgem.jeesite.modules.myasset.dao.BusiPlaceDao;
 /**
  * 资产存放地点Service
  * @author gucl
- * @version 2018-06-13
+ * @version 2018-06-23
  */
 @Service
 @Transactional(readOnly = true)
