@@ -31,6 +31,7 @@ import com.thinkgem.jeesite.modules.gen.entity.GenScheme;
 import com.thinkgem.jeesite.modules.gen.entity.GenTable;
 import com.thinkgem.jeesite.modules.gen.entity.GenTableColumn;
 import com.thinkgem.jeesite.modules.gen.entity.GenTemplate;
+import com.thinkgem.jeesite.modules.myasset.entity.BusiCategory;
 import com.thinkgem.jeesite.modules.sys.entity.Area;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -145,6 +146,12 @@ public class GenUtils {
 				column.setJavaType(Area.class.getName());
 				column.setJavaField(column.getJavaField().replaceAll("Id", ".id|name"));
 				column.setShowType("areaselect");
+			}
+			//资产分类
+			else if (StringUtils.startsWithIgnoreCase(column.getName(), "category_id")){
+				column.setJavaType(BusiCategory.class.getName());
+				column.setJavaField(column.getJavaField().replaceAll("Id", ".id|name"));
+				column.setShowType("categoryselect");
 			}
 			// 创建者、更新者
 			else if (StringUtils.startsWithIgnoreCase(column.getName(), "create_by")
