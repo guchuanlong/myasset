@@ -42,7 +42,11 @@
 					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
 			</if>
 			<if test="category != null and category.id != null and category.id != ''">
-				AND a.category_id = #{category.id}
+				<!-- AND a.category_id = #{category.id} -->
+				AND (a3.id = #{category.id} OR a3.parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%,'||#{category.id}||',%')</if>
+					<if test="dbName == 'mssql'">'%,'+#{category.id}+',%')</if>
+					<if test="dbName == 'mysql'">CONCAT('%,', #{category.id}, ',%'))</if>
 			</if>
 		</where>
 		<choose>
