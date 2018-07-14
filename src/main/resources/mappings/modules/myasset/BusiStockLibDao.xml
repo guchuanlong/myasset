@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.BusiStockLibDao">
+    
+	<sql id="busiStockLibColumns">
+		a.id AS "id",
+		a.company_id AS "companyId",
+		a.office_id AS "office.id",
+		a.category_id AS "category.id",
+		a.assetname_id AS "assetnameId",
+		a.place_id AS "placeId",
+		a.model_format AS "modelFormat",
+		a.measure_unit_id AS "measureUnitId",
+		a.produce_factory AS "produceFactory",
+		a.device_no AS "deviceNo",
+		a.initial_flag AS "initialFlag",
+		a.stock_num AS "stockNum",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		o3.name AS "office.name",
+		a4.name AS "category.name"
+	</sql>
+	
+	<sql id="busiStockLibJoins">
+		LEFT JOIN sys_office o3 ON o3.id = a.office_id
+		LEFT JOIN busi_category a4 ON a4.id = a.category_id
+	</sql>
+    
+	<select id="get" resultType="BusiStockLib">
+		SELECT 
+			<include refid="busiStockLibColumns"/>
+		FROM busi_stock_lib a
+		<include refid="busiStockLibJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BusiStockLib">
+		SELECT 
+			<include refid="busiStockLibColumns"/>
+		FROM busi_stock_lib a
+		<include refid="busiStockLibJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="companyId != null and companyId != ''">
+				AND a.company_id = #{companyId}
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
+			</if>
+			<if test="category != null and category.id != null and category.id != ''">
+				AND a.category_id = #{category.id}
+			</if>
+			<if test="assetnameId != null and assetnameId != ''">
+				AND a.assetname_id = #{assetnameId}
+			</if>
+			<if test="placeId != null and placeId != ''">
+				AND a.place_id = #{placeId}
+			</if>
+			<if test="modelFormat != null and modelFormat != ''">
+				AND a.model_format = #{modelFormat}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BusiStockLib">
+		SELECT 
+			<include refid="busiStockLibColumns"/>
+		FROM busi_stock_lib a
+		<include refid="busiStockLibJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO busi_stock_lib(
+			id,
+			company_id,
+			office_id,
+			category_id,
+			assetname_id,
+			place_id,
+			model_format,
+			measure_unit_id,
+			produce_factory,
+			device_no,
+			initial_flag,
+			stock_num,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{companyId},
+			#{office.id},
+			#{category.id},
+			#{assetnameId},
+			#{placeId},
+			#{modelFormat},
+			#{measureUnitId},
+			#{produceFactory},
+			#{deviceNo},
+			#{initialFlag},
+			#{stockNum},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE busi_stock_lib SET 	
+			company_id = #{companyId},
+			office_id = #{office.id},
+			category_id = #{category.id},
+			assetname_id = #{assetnameId},
+			place_id = #{placeId},
+			model_format = #{modelFormat},
+			measure_unit_id = #{measureUnitId},
+			produce_factory = #{produceFactory},
+			device_no = #{deviceNo},
+			initial_flag = #{initialFlag},
+			stock_num = #{stockNum},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE busi_stock_lib SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

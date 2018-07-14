@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.BusiAssetLibinBillDao">
+    
+	<sql id="busiAssetLibinBillColumns">
+		a.id AS "id",
+		a.libin_bill_no AS "libinBillNo",
+		a.libin_num AS "libinNum",
+		a.measure_unit_id AS "measureUnitId",
+		a.libin_begin_global_id AS "libinBeginGlobalId",
+		a.libin_end_global_id AS "libinEndGlobalId",
+		a.company_id AS "companyId",
+		a.office_id AS "office.id",
+		a.place_id AS "placeId",
+		a.category_id AS "category.id",
+		a.assetname_id AS "assetnameId",
+		a.produce_factory AS "produceFactory",
+		a.model_format AS "modelFormat",
+		a.device_no AS "deviceNo",
+		a.asset_config AS "assetConfig",
+		a.produce_date AS "produceDate",
+		a.unit_price AS "unitPrice",
+		a.depreciation_way_id AS "depreciationWayId",
+		a.depreciation_period AS "depreciationPeriod",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		o8.name AS "office.name",
+		a10.name AS "category.name"
+	</sql>
+	
+	<sql id="busiAssetLibinBillJoins">
+		LEFT JOIN sys_office o8 ON o8.id = a.office_id
+		LEFT JOIN busi_category a10 ON a10.id = a.category_id
+	</sql>
+    
+	<select id="get" resultType="BusiAssetLibinBill">
+		SELECT 
+			<include refid="busiAssetLibinBillColumns"/>
+		FROM busi_asset_libin_bill a
+		<include refid="busiAssetLibinBillJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BusiAssetLibinBill">
+		SELECT 
+			<include refid="busiAssetLibinBillColumns"/>
+		FROM busi_asset_libin_bill a
+		<include refid="busiAssetLibinBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="libinBillNo != null and libinBillNo != ''">
+				AND a.libin_bill_no = #{libinBillNo}
+			</if>
+			<if test="companyId != null and companyId != ''">
+				AND a.company_id = #{companyId}
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
+			</if>
+			<if test="placeId != null and placeId != ''">
+				AND a.place_id = #{placeId}
+			</if>
+			<if test="category != null and category.id != null and category.id != ''">
+				AND a.category_id = #{category.id}
+			</if>
+			<if test="assetnameId != null and assetnameId != ''">
+				AND a.assetname_id = #{assetnameId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BusiAssetLibinBill">
+		SELECT 
+			<include refid="busiAssetLibinBillColumns"/>
+		FROM busi_asset_libin_bill a
+		<include refid="busiAssetLibinBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO busi_asset_libin_bill(
+			id,
+			libin_bill_no,
+			libin_num,
+			measure_unit_id,
+			libin_begin_global_id,
+			libin_end_global_id,
+			company_id,
+			office_id,
+			place_id,
+			category_id,
+			assetname_id,
+			produce_factory,
+			model_format,
+			device_no,
+			asset_config,
+			produce_date,
+			unit_price,
+			depreciation_way_id,
+			depreciation_period,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{libinBillNo},
+			#{libinNum},
+			#{measureUnitId},
+			#{libinBeginGlobalId},
+			#{libinEndGlobalId},
+			#{companyId},
+			#{office.id},
+			#{placeId},
+			#{category.id},
+			#{assetnameId},
+			#{produceFactory},
+			#{modelFormat},
+			#{deviceNo},
+			#{assetConfig},
+			#{produceDate},
+			#{unitPrice},
+			#{depreciationWayId},
+			#{depreciationPeriod},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE busi_asset_libin_bill SET 	
+			libin_bill_no = #{libinBillNo},
+			libin_num = #{libinNum},
+			measure_unit_id = #{measureUnitId},
+			libin_begin_global_id = #{libinBeginGlobalId},
+			libin_end_global_id = #{libinEndGlobalId},
+			company_id = #{companyId},
+			office_id = #{office.id},
+			place_id = #{placeId},
+			category_id = #{category.id},
+			assetname_id = #{assetnameId},
+			produce_factory = #{produceFactory},
+			model_format = #{modelFormat},
+			device_no = #{deviceNo},
+			asset_config = #{assetConfig},
+			produce_date = #{produceDate},
+			unit_price = #{unitPrice},
+			depreciation_way_id = #{depreciationWayId},
+			depreciation_period = #{depreciationPeriod},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE busi_asset_libin_bill SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
