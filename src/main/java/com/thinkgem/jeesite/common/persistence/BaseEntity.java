@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
@@ -18,6 +20,7 @@ import com.thinkgem.jeesite.common.supcan.annotation.treelist.cols.SupCol;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+import com.thinkgem.jeesite.test.BaseTest;
 
 /**
  * Entity支持类
@@ -28,6 +31,8 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 public abstract class BaseEntity<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	public final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/**
 	 * 实体编号（唯一标识）

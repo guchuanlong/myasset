@@ -3,13 +3,13 @@
  */
 package com.thinkgem.jeesite.modules.myasset.entity;
 
-import org.hibernate.validator.constraints.Length;
-import com.thinkgem.jeesite.modules.sys.entity.Office;
-import com.thinkgem.jeesite.modules.myasset.entity.BusiCategory;
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
 
 /**
  * 资产入库Entity
@@ -203,5 +203,7 @@ public class BusiAssetLibinBill extends DataEntity<BusiAssetLibinBill> {
 	public void setDepreciationPeriod(String depreciationPeriod) {
 		this.depreciationPeriod = depreciationPeriod;
 	}
+	
+	
 	
 }

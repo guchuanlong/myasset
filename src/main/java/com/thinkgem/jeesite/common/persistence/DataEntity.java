@@ -10,6 +10,8 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.myxapp.sdk.sequence.util.SeqUtil;
+import com.myxapp.sdk.util.Underline2Camel;
 import com.thinkgem.jeesite.common.utils.IdGen;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
@@ -45,8 +47,12 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 	@Override
 	public void preInsert(){
 		// 不限制ID为UUID，调用setIsNewRecord()使用自定义ID
-		if (!this.isNewRecord){
-			setId(IdGen.uuid());
+		if (!this.isNewRecord){			
+			//setId(IdGen.uuid());
+			String seqName=Underline2Camel.camel2Underline(this.getClass().getSimpleName())+"$"+"ID";
+			logger.debug("seqName="+seqName);
+			String seqValue=SeqUtil.getNewId(seqName).toString();
+			setId(seqValue);
 		}
 		User user = UserUtils.getUser();
 		if (StringUtils.isNotBlank(user.getId())){

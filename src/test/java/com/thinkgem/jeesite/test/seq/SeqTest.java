@@ -8,15 +8,22 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.myxapp.sdk.sequence.util.SeqUtil;
+import com.thinkgem.jeesite.modules.myasset.entity.BusiAssetLibinBill;
 import com.thinkgem.jeesite.test.BaseTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "/spring-context.xml" })
+@ContextConfiguration({ "classpath:spring-context.xml" })
 public class SeqTest {
 	public static final Logger log = LoggerFactory.getLogger(BaseTest.class);
 	@Test
 	public void testseq(){
 		log.info("seq:aaaa");
 		log.info("seq="+SeqUtil.getNewId("test"));
+	}
+	
+	@Test
+	public void testssss(){
+		BusiAssetLibinBill obj=new BusiAssetLibinBill();
+		obj.preInsert();
 	}
 }
