@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.myasset.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,10 +19,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
-import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.myasset.entity.BusiAssetLibinBill;
+import com.thinkgem.jeesite.modules.myasset.entity.BusiAssetname;
+import com.thinkgem.jeesite.modules.myasset.entity.BusiPlace;
 import com.thinkgem.jeesite.modules.myasset.service.BusiAssetLibinBillService;
+import com.thinkgem.jeesite.modules.myasset.service.BusiAssetnameService;
+import com.thinkgem.jeesite.modules.myasset.service.BusiPlaceService;
 
 /**
  * 资产入库Controller
@@ -33,6 +39,12 @@ public class BusiAssetLibinBillController extends BaseController {
 
 	@Autowired
 	private BusiAssetLibinBillService busiAssetLibinBillService;
+	
+	@Autowired
+	private BusiAssetnameService busiAssetnameService;
+	
+	@Autowired
+	private BusiPlaceService busiPlaceService;
 	
 	@ModelAttribute
 	public BusiAssetLibinBill get(@RequestParam(required=false) String id) {
@@ -58,6 +70,16 @@ public class BusiAssetLibinBillController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(BusiAssetLibinBill busiAssetLibinBill, Model model) {
 		model.addAttribute("busiAssetLibinBill", busiAssetLibinBill);
+		
+		BusiAssetname busiAssetname=new BusiAssetname();
+		List<BusiAssetname> assetnameList=busiAssetnameService.findList(busiAssetname);
+		
+		BusiPlace busiPlace=new BusiPlace();
+		List<BusiPlace> placeList=busiPlaceService.findList(busiPlace);
+		
+		model.addAttribute("assetnameList", assetnameList);
+		model.addAttribute("placeList", placeList);
+		
 		return "modules/myasset/busiAssetLibinBillForm";
 	}
 

@@ -83,7 +83,11 @@
 		<div class="control-group">
 			<label class="control-label">存放地点：</label>
 			<div class="controls">
-				<form:input path="placeId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:select path="placeId" class="input-xlarge">
+					<form:option value="" label=""/>
+					<form:options items="${placeList}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				</form:select>
+				<%-- <form:input path="placeId" htmlEscape="false" maxlength="64" class="input-xlarge "/> --%>
 			</div>
 		</div>
 		<div class="control-group">
@@ -96,7 +100,11 @@
 		<div class="control-group">
 			<label class="control-label">资产名称：</label>
 			<div class="controls">
-				<form:input path="assetnameId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:select path="assetnameId" class="input-xlarge">
+					<form:option value="" label=""/>
+					<form:options items="${assetnameList}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				</form:select>
+				<%-- <form:input path="assetnameId" htmlEscape="false" maxlength="64" class="input-xlarge "/> --%>
 			</div>
 		</div>
 		<div class="control-group">

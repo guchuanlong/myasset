@@ -87,13 +87,13 @@
 					${busiAssetLibinBill.office.name}
 				</td>
 				<td>
-					${busiAssetLibinBill.placeId}
+					${fns:getPlacename(busiAssetLibinBill.placeId)}
 				</td>
 				<td>
 					${busiAssetLibinBill.category.name}
 				</td>
 				<td>
-					${busiAssetLibinBill.assetnameId}
+					${fns:getAssetname(busiAssetLibinBill.assetnameId)}
 				</td>
 				<td>
 					${busiAssetLibinBill.produceFactory}

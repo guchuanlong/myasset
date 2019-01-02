@@ -244,4 +244,19 @@
     <example>${fns:toJson(object)}</example>  
   </function>
   
+    <function>
+    <description>获取资产名称</description>
+    <name>getAssetname</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.AssetnameUtils</function-class>
+    <function-signature>java.lang.String getAssetname(java.lang.String)</function-signature>
+    <example>${fns:getAssetname(id)}</example>  
+  </function> 
+  
+   <function>
+    <description>获取存放地点名称</description>
+    <name>getPlacename</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.PlaceUtils</function-class>
+    <function-signature>java.lang.String getPlacename(java.lang.String)</function-signature>
+    <example>${fns:getPlacename(id)}</example>  
+  </function> 
 </taglib>
