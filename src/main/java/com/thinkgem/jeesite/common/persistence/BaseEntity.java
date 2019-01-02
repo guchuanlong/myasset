@@ -31,7 +31,7 @@ public abstract class BaseEntity<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public final Logger logger = LoggerFactory.getLogger(this.getClass());
+	//public final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/**
 	 * 实体编号（唯一标识）

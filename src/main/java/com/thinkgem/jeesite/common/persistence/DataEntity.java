@@ -50,7 +50,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 		if (!this.isNewRecord){			
 			//setId(IdGen.uuid());
 			String seqName=Underline2Camel.camel2Underline(this.getClass().getSimpleName())+"$"+"ID";
-			logger.debug("seqName="+seqName);
+			//logger.debug("seqName="+seqName);
 			String seqValue=SeqUtil.getNewId(seqName).toString();
 			setId(seqValue);
 		}
