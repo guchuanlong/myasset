@@ -10,7 +10,7 @@ import com.thinkgem.jeesite.modules.myasset.entity.BusiAssetLibinBill;
 /**
  * 资产入库DAO接口
  * @author gucl
- * @version 2018-07-15
+ * @version 2019-01-03
  */
 @MyBatisDao
 public interface BusiAssetLibinBillDao extends CrudDao<BusiAssetLibinBill> {

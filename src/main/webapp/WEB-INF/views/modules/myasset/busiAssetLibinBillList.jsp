@@ -29,7 +29,8 @@
 				<form:input path="libinBillNo" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>归属公司：</label>
-				<form:input path="companyId" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<sys:treeselect id="company" name="company.id" value="${busiAssetLibinBill.company.id}" labelName="company.name" labelValue="${busiAssetLibinBill.company.name}"
+					title="公司" url="/sys/office/treeData?type=1" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>
 			<li><label>归属部门：</label>
 				<sys:treeselect id="office" name="office.id" value="${busiAssetLibinBill.office.id}" labelName="office.name" labelValue="${busiAssetLibinBill.office.name}"
@@ -80,7 +81,7 @@
 					${fns:getDictLabel(busiAssetLibinBill.measureUnitId, 'myasset_measure_unit', '')}
 				</td>
 				<td>
-					${busiAssetLibinBill.companyId}
+					${busiAssetLibinBill.company.name}
 				</td>
 				<td>
 					${busiAssetLibinBill.office.name}

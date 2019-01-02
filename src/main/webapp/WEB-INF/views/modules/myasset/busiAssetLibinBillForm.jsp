@@ -33,12 +33,59 @@
 	<form:form id="inputForm" modelAttribute="busiAssetLibinBill" action="${ctx}/myasset/busiAssetLibinBill/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
-		<%-- <div class="control-group">
+		<div class="control-group">
 			<label class="control-label">入库单编号：</label>
 			<div class="controls">
 				<form:input path="libinBillNo" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 			</div>
-		</div> --%>
+		</div>
+		<div class="control-group">
+			<label class="control-label">入库数量：</label>
+			<div class="controls">
+				<form:input path="libinNum" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">计量单位：</label>
+			<div class="controls">
+				<form:select path="measureUnitId" class="input-xlarge ">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('myasset_measure_unit')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">入库开始编号：</label>
+			<div class="controls">
+				<form:input path="libinBeginGlobalId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">入库结束编号：</label>
+			<div class="controls">
+				<form:input path="libinEndGlobalId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">归属公司：</label>
+			<div class="controls">
+				<sys:treeselect id="company" name="company.id" value="${busiAssetLibinBill.company.id}" labelName="company.name" labelValue="${busiAssetLibinBill.company.name}"
+					title="公司" url="/sys/office/treeData?type=1" cssClass="" allowClear="true" notAllowSelectParent="true"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">归属部门：</label>
+			<div class="controls">
+				<sys:treeselect id="office" name="office.id" value="${busiAssetLibinBill.office.id}" labelName="office.name" labelValue="${busiAssetLibinBill.office.name}"
+					title="部门" url="/sys/office/treeData?type=2" cssClass="" allowClear="true" notAllowSelectParent="true"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">存放地点：</label>
+			<div class="controls">
+				<form:input path="placeId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label">资产分类：</label>
 			<div class="controls">
@@ -91,41 +138,6 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">入库数量：</label>
-			<div class="controls">
-				<form:input path="libinNum" htmlEscape="false" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">计量单位：</label>
-			<div class="controls">
-				<form:select path="measureUnitId" class="input-xlarge ">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('myasset_measure_unit')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">归属公司：</label>
-			<div class="controls">
-				<form:input path="companyId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">归属部门：</label>
-			<div class="controls">
-				<sys:treeselect id="office" name="office.id" value="${busiAssetLibinBill.office.id}" labelName="office.name" labelValue="${busiAssetLibinBill.office.name}"
-					title="部门" url="/sys/office/treeData?type=2" cssClass="" allowClear="true" notAllowSelectParent="true"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">存放地点：</label>
-			<div class="controls">
-				<form:input path="placeId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-			</div>
-		</div>
-		
-		<div class="control-group">
 			<label class="control-label">折旧方式：</label>
 			<div class="controls">
 				<form:input path="depreciationWayId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
@@ -137,22 +149,6 @@
 				<form:input path="depreciationPeriod" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
-		
-		<div class="control-group">
-			<label class="control-label">入库开始编号：</label>
-			<div class="controls">
-				<form:input path="libinBeginGlobalId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">入库结束编号：</label>
-			<div class="controls">
-				<form:input path="libinEndGlobalId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-			</div>
-		</div>
-		
-		
-		
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">

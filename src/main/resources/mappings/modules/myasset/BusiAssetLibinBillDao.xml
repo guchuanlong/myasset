@@ -9,7 +9,7 @@
 		a.measure_unit_id AS "measureUnitId",
 		a.libin_begin_global_id AS "libinBeginGlobalId",
 		a.libin_end_global_id AS "libinEndGlobalId",
-		a.company_id AS "companyId",
+		a.company_id AS "company.id",
 		a.office_id AS "office.id",
 		a.place_id AS "placeId",
 		a.category_id AS "category.id",
@@ -28,11 +28,13 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
+		company7.name AS "company.name",
 		o8.name AS "office.name",
 		a10.name AS "category.name"
 	</sql>
 	
 	<sql id="busiAssetLibinBillJoins">
+		LEFT JOIN sys_office company7 ON company7.id = a.company_id
 		LEFT JOIN sys_office o8 ON o8.id = a.office_id
 		LEFT JOIN busi_category a10 ON a10.id = a.category_id
 	</sql>
@@ -55,8 +57,8 @@
 			<if test="libinBillNo != null and libinBillNo != ''">
 				AND a.libin_bill_no = #{libinBillNo}
 			</if>
-			<if test="companyId != null and companyId != ''">
-				AND a.company_id = #{companyId}
+			<if test="company != null and company.id != null and company.id != ''">
+				AND a.company_id = #{company.id}
 			</if>
 			<if test="office != null and office.id != null and office.id != ''">
 				AND a.office_id = #{office.id}
@@ -133,7 +135,7 @@
 			#{measureUnitId},
 			#{libinBeginGlobalId},
 			#{libinEndGlobalId},
-			#{companyId},
+			#{company.id},
 			#{office.id},
 			#{placeId},
 			#{category.id},
@@ -162,7 +164,7 @@
 			measure_unit_id = #{measureUnitId},
 			libin_begin_global_id = #{libinBeginGlobalId},
 			libin_end_global_id = #{libinEndGlobalId},
-			company_id = #{companyId},
+			company_id = #{company.id},
 			office_id = #{office.id},
 			place_id = #{placeId},
 			category_id = #{category.id},

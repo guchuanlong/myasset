@@ -3,18 +3,18 @@
  */
 package com.thinkgem.jeesite.modules.myasset.entity;
 
-import java.util.Date;
-
 import org.hibernate.validator.constraints.Length;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
+import com.thinkgem.jeesite.modules.myasset.entity.BusiCategory;
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
  * 资产入库Entity
  * @author gucl
- * @version 2018-07-15
+ * @version 2019-01-03
  */
 public class BusiAssetLibinBill extends DataEntity<BusiAssetLibinBill> {
 	
@@ -24,7 +24,7 @@ public class BusiAssetLibinBill extends DataEntity<BusiAssetLibinBill> {
 	private String measureUnitId;		// 计量单位
 	private String libinBeginGlobalId;		// 入库开始编号
 	private String libinEndGlobalId;		// 入库结束编号
-	private String companyId;		// 归属公司
+	private Office company;		// 归属公司
 	private Office office;		// 归属部门
 	private String placeId;		// 存放地点
 	private BusiCategory category;		// 资产分类
@@ -90,13 +90,12 @@ public class BusiAssetLibinBill extends DataEntity<BusiAssetLibinBill> {
 		this.libinEndGlobalId = libinEndGlobalId;
 	}
 	
-	@Length(min=0, max=64, message="归属公司长度必须介于 0 和 64 之间")
-	public String getCompanyId() {
-		return companyId;
+	public Office getCompany() {
+		return company;
 	}
 
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
+	public void setCompany(Office company) {
+		this.company = company;
 	}
 	
 	public Office getOffice() {
@@ -203,7 +202,5 @@ public class BusiAssetLibinBill extends DataEntity<BusiAssetLibinBill> {
 	public void setDepreciationPeriod(String depreciationPeriod) {
 		this.depreciationPeriod = depreciationPeriod;
 	}
-	
-	
 	
 }

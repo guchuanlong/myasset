@@ -25,7 +25,7 @@ import com.thinkgem.jeesite.modules.myasset.service.BusiAssetLibinBillService;
 /**
  * 资产入库Controller
  * @author gucl
- * @version 2018-07-15
+ * @version 2019-01-03
  */
 @Controller
 @RequestMapping(value = "${adminPath}/myasset/busiAssetLibinBill")

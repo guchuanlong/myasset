@@ -16,7 +16,7 @@ import com.thinkgem.jeesite.modules.myasset.dao.BusiAssetLibinBillDao;
 /**
  * 资产入库Service
  * @author gucl
- * @version 2018-07-15
+ * @version 2019-01-03
  */
 @Service
 @Transactional(readOnly = true)
