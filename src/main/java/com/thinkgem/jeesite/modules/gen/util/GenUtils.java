@@ -141,13 +141,19 @@ public class GenUtils {
 				column.setJavaField(column.getJavaField().replaceAll("Id", ".id|name"));
 				column.setShowType("officeselect");
 			}
+			// 公司--gucl
+			else if (StringUtils.startsWithIgnoreCase(column.getName(), "compant_id")){
+				column.setJavaType(Office.class.getName());
+				column.setJavaField(column.getJavaField().replaceAll("Id", ".id|name"));
+				column.setShowType("companyselect");
+			}
 			// 区域
 			else if (StringUtils.startsWithIgnoreCase(column.getName(), "area_id")){
 				column.setJavaType(Area.class.getName());
 				column.setJavaField(column.getJavaField().replaceAll("Id", ".id|name"));
 				column.setShowType("areaselect");
 			}
-			//资产分类
+			//资产分类--gucl
 			else if (StringUtils.startsWithIgnoreCase(column.getName(), "category_id")){
 				column.setJavaType(BusiCategory.class.getName());
 				column.setJavaField(column.getJavaField().replaceAll("Id", ".id|name"));

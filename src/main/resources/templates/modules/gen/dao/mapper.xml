@@ -23,6 +23,10 @@
 					<#list c.javaFieldAttrs as a>
 		o${c_index + 1}.${a[1]} AS "${c.simpleJavaField}.${a[0]}",
 					</#list>
+				<#elseif c.showType?? && c.showType == "companyselect">
+					<#list c.javaFieldAttrs as a>
+		company${c_index + 1}.${a[1]} AS "${c.simpleJavaField}.${a[0]}",
+					</#list>
 				<#elseif c.showType?? && c.showType == "areaselect">
 					<#list c.javaFieldAttrs as a>
 		a${c_index + 1}.${a[1]} AS "${c.simpleJavaField}.${a[0]}",
