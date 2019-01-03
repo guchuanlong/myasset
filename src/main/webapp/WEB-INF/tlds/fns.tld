@@ -259,4 +259,11 @@
     <function-signature>java.lang.String getPlacename(java.lang.String)</function-signature>
     <example>${fns:getPlacename(id)}</example>  
   </function> 
+   <function>
+    <description>获取公司部门名称</description>
+    <name>getOfficename</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.OfficeUtils</function-class>
+    <function-signature>java.lang.String getOfficename(java.lang.String)</function-signature>
+    <example>${fns:getOfficename(id)}</example>  
+  </function> 
 </taglib>

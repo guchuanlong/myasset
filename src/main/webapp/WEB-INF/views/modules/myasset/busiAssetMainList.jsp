@@ -19,15 +19,12 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/myasset/busiAssetMain/">资产主表列表</a></li>
-		<shiro:hasPermission name="myasset:busiAssetMain:edit"><li><a href="${ctx}/myasset/busiAssetMain/form">资产主表添加</a></li></shiro:hasPermission>
+		<shiro:hasPermission name="myasset:busiAssetMain:edit"><li style="display:none;"><a href="${ctx}/myasset/busiAssetMain/form">资产主表添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="busiAssetMain" action="${ctx}/myasset/busiAssetMain/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>归属公司：</label>
-				<form:input path="companyId" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
 			<li><label>归属部门：</label>
 				<sys:treeselect id="office" name="office.id" value="${busiAssetMain.office.id}" labelName="office.name" labelValue="${busiAssetMain.office.name}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
@@ -53,15 +50,14 @@
 				<th>入库单编号</th>
 				<th>资产状态</th>
 				<th>计量单位</th>
-				<th>资产全局唯一标识</th>
+				<th>资产编码</th>
+				<th>EPC编码</th>
 				<th>归属公司</th>
 				<th>归属部门</th>
 				<th>存放地点</th>
 				<th>资产分类</th>
 				<th>资产名称</th>
-				<th>生产厂家</th>
 				<th>资产型号</th>
-				<th>设备编号</th>
 				<th>出厂日期</th>
 				<shiro:hasPermission name="myasset:busiAssetMain:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -76,37 +72,34 @@
 					${busiAssetMain.status}
 				</td>
 				<td>
-					${busiAssetMain.measureUnitId}
+					${fns:getDictLabel(busiAssetMain.measureUnitId, 'myasset_measure_unit', '')}
 				</td>
 				<td>
 					${busiAssetMain.assetGlobalId}
 				</td>
 				<td>
-					${busiAssetMain.companyId}
+					${busiAssetMain.assetRfidTagid}
+				</td>
+				<td>
+					${fns:getOfficename(busiAssetMain.companyId)}
 				</td>
 				<td>
 					${busiAssetMain.office.name}
 				</td>
 				<td>
-					${busiAssetMain.placeId}
+					${fns:getPlacename(busiAssetMain.placeId)}
 				</td>
 				<td>
 					${busiAssetMain.category.name}
 				</td>
 				<td>
-					${busiAssetMain.assetnameId}
-				</td>
-				<td>
-					${busiAssetMain.produceFactory}
+					${fns:getAssetname(busiAssetMain.assetnameId)}
 				</td>
 				<td>
 					${busiAssetMain.modelFormat}
 				</td>
 				<td>
-					${busiAssetMain.deviceNo}
-				</td>
-				<td>
-					<fmt:formatDate value="${busiAssetMain.produceDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${busiAssetMain.produceDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<shiro:hasPermission name="myasset:busiAssetMain:edit"><td>
     				<a href="${ctx}/myasset/busiAssetMain/form?id=${busiAssetMain.id}">修改</a>

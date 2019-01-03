@@ -27,7 +27,7 @@ public class BusiStockLib extends DataEntity<BusiStockLib> {
 	private String produceFactory;		// 生产厂家
 	private String deviceNo;		// 设备编号
 	private String initialFlag;		// 是否初始库存
-	private String stockNum;		// stock_num
+	private Integer stockNum;		// stock_num
 	
 	public BusiStockLib() {
 		super();
@@ -125,11 +125,11 @@ public class BusiStockLib extends DataEntity<BusiStockLib> {
 		this.initialFlag = initialFlag;
 	}
 	
-	public String getStockNum() {
+	public Integer getStockNum() {
 		return stockNum;
 	}
 
-	public void setStockNum(String stockNum) {
+	public void setStockNum(Integer stockNum) {
 		this.stockNum = stockNum;
 	}
 	

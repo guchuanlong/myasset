@@ -53,6 +53,17 @@ public final class SeqUtil {
     	String seqStr = Long.toString(newId,36).toUpperCase();//36进制   0-9A-Z
         return seqStr;
     }
+    /**
+     * 获取下一个Id 16进制
+     * @param seqName
+     * @return
+     * @author
+     */
+    public static String getNewId16Hex(String seqName) {
+    	Long newId=SeqClientFactory.getSeqClient().nextValue(seqName);
+    	String seqStr = Long.toString(newId,16).toUpperCase();//16进制   0-9A-F
+    	return seqStr;
+    }
     
     
     /**
@@ -69,6 +80,21 @@ public final class SeqUtil {
             seqStr = "0000000" + seqStr;
         }
         return seqStr.substring(seqStr.length() - seqLen);
+    }
+    /**
+     * 获取16进制的序列（由0-9 A-F组成）
+     * @param seqName
+     * @param seqLen
+     * @return
+     * @author gucl
+     */
+    public static String getNewId16Hex(String seqName, int seqLen) {
+    	Long newId = getNewId(seqName);
+    	String seqStr = Long.toString(newId,16).toUpperCase();//36进制   0-9A-Z
+    	while (seqStr.length() < seqLen) {
+    		seqStr = "0000000" + seqStr;
+    	}
+    	return seqStr.substring(seqStr.length() - seqLen);
     }
     
     
