@@ -30,13 +30,17 @@
 		a.del_flag AS "delFlag",
 		company7.name AS "company.name",
 		o8.name AS "office.name",
-		a10.name AS "category.name"
+		a10.name AS "category.name",
+		cu.name as "createBy.name",
+		uu.name as "updateBy.name"
 	</sql>
 	
 	<sql id="busiAssetLibinBillJoins">
 		LEFT JOIN sys_office company7 ON company7.id = a.company_id
 		LEFT JOIN sys_office o8 ON o8.id = a.office_id
 		LEFT JOIN busi_category a10 ON a10.id = a.category_id
+		left join sys_user cu on a.create_by=cu.id
+		left join sys_user uu on a.update_by=uu.id
 	</sql>
     
 	<select id="get" resultType="BusiAssetLibinBill">

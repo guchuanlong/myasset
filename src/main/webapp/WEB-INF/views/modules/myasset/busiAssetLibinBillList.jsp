@@ -62,9 +62,9 @@
 				<th>存放地点</th>
 				<th>资产分类</th>
 				<th>资产名称</th>
-				<th>生产厂家</th>
-				<th>资产型号</th>
-				<th>设备编号</th>
+				<th>入库时间</th>
+				<th>操作人</th>
+				<th>变更时间</th>
 				<shiro:hasPermission name="myasset:busiAssetLibinBill:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -96,13 +96,13 @@
 					${fns:getAssetname(busiAssetLibinBill.assetnameId)}
 				</td>
 				<td>
-					${busiAssetLibinBill.produceFactory}
+					<fmt:formatDate value="${busiAssetLibinBill.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${busiAssetLibinBill.modelFormat}
+					${busiAssetLibinBill.updateBy.name}
 				</td>
 				<td>
-					${busiAssetLibinBill.deviceNo}
+					<fmt:formatDate value="${busiAssetLibinBill.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<shiro:hasPermission name="myasset:busiAssetLibinBill:edit"><td>
     				<a href="${ctx}/myasset/busiAssetLibinBill/form?id=${busiAssetLibinBill.id}">修改</a>
