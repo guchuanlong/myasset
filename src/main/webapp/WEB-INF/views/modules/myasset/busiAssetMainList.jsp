@@ -57,8 +57,8 @@
 				<th>存放地点</th>
 				<th>资产分类</th>
 				<th>资产名称</th>
-				<th>资产型号</th>
-				<th>出厂日期</th>
+				<!-- <th>资产型号</th>
+				<th>出厂日期</th> -->
 				<shiro:hasPermission name="myasset:busiAssetMain:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -95,12 +95,12 @@
 				<td>
 					${fns:getAssetname(busiAssetMain.assetnameId)}
 				</td>
-				<td>
+				<%-- <td>
 					${busiAssetMain.modelFormat}
 				</td>
 				<td>
 					<fmt:formatDate value="${busiAssetMain.produceDate}" pattern="yyyy-MM-dd"/>
-				</td>
+				</td> --%>
 				<shiro:hasPermission name="myasset:busiAssetMain:edit"><td>
     				<a href="${ctx}/myasset/busiAssetMain/form?id=${busiAssetMain.id}">修改</a>
 					<a href="${ctx}/myasset/busiAssetMain/delete?id=${busiAssetMain.id}" onclick="return confirmx('确认要删除该资产主表吗？', this.href)">删除</a>

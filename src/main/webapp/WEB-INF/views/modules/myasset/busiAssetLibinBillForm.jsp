@@ -33,12 +33,12 @@
 	<form:form id="inputForm" modelAttribute="busiAssetLibinBill" action="${ctx}/myasset/busiAssetLibinBill/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
-		<div class="control-group">
+		<%-- <div class="control-group">
 			<label class="control-label">入库单编号：</label>
 			<div class="controls">
 				<form:input path="libinBillNo" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 			</div>
-		</div>
+		</div> --%>
 		<div class="control-group">
 			<label class="control-label">入库数量：</label>
 			<div class="controls">
@@ -54,7 +54,7 @@
 				</form:select>
 			</div>
 		</div>
-		<div class="control-group">
+		<%-- <div class="control-group">
 			<label class="control-label">入库开始编号：</label>
 			<div class="controls">
 				<form:input path="libinBeginGlobalId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
@@ -65,7 +65,7 @@
 			<div class="controls">
 				<form:input path="libinEndGlobalId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 			</div>
-		</div>
+		</div> --%>
 		<div class="control-group">
 			<label class="control-label">归属公司：</label>
 			<div class="controls">

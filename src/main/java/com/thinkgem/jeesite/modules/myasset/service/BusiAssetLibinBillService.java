@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.myasset.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.myxapp.sdk.sequence.util.SeqUtil;
 import com.myxapp.sdk.util.BeanUtil;
 import com.myxapp.sdk.util.CollectionUtil;
+import com.myxapp.sdk.util.DateUtil;
 import com.myxapp.sdk.util.StringUtil;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
@@ -53,11 +55,13 @@ public class BusiAssetLibinBillService extends CrudService<BusiAssetLibinBillDao
 		//super.save(busiAssetLibinBill);
 		if (StringUtil.isBlank(libinBill.getId())){
 			libinBill.preInsert();
+			String libinBillNo=DateUtil.getDateString(new Date(), "yyyyMMdd")+SeqUtil.getNewId("LIBIN_BILL_NO", 5);
+			libinBill.setLibinBillNo(libinBillNo);
 			dao.insert(libinBill);
 			//插入到资产主表
 			int libnum=Integer.parseInt(libinBill.getLibinNum());
 			
-			//TODO 插入到库存表
+			//插入到库存表
 			BusiStockLib stocklibParam=new BusiStockLib();
 			stocklibParam.setCompanyId(libinBill.getCompany().getId());
 			stocklibParam.setOffice(libinBill.getOffice());
@@ -91,7 +95,9 @@ public class BusiAssetLibinBillService extends CrudService<BusiAssetLibinBillDao
 				stocklibId=stockMod.getId();
 				
 			}
-			
+			String libinBeginGlobalId="";
+			String libinEndGlobalId="";
+			//更新资产主表
 			for(int i=0;i<libnum;i++) {
 				
 				BusiAssetMain am=new BusiAssetMain();
@@ -107,7 +113,17 @@ public class BusiAssetLibinBillService extends CrudService<BusiAssetLibinBillDao
 				am.setIsNewRecord(false);
 				am.preInsert();
 				assetMainDao.insert(am);
+				if(i==0) {
+					libinBeginGlobalId=assetGlobalId;
+				}
+				if(i==libnum-1) {
+					libinEndGlobalId=assetGlobalId;
+				}
 			}
+			//更新
+			libinBill.setLibinBeginGlobalId(libinBeginGlobalId);
+			libinBill.setLibinEndGlobalId(libinEndGlobalId);
+			dao.update(libinBill);
 			
 		}else{
 			libinBill.preUpdate();
