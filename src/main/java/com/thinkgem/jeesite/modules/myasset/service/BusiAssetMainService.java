@@ -16,7 +16,7 @@ import com.thinkgem.jeesite.modules.myasset.dao.BusiAssetMainDao;
 /**
  * 资产主表Service
  * @author gucl
- * @version 2018-07-15
+ * @version 2019-02-09
  */
 @Service
 @Transactional(readOnly = true)

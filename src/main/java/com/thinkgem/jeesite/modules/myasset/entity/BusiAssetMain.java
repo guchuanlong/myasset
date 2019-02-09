@@ -14,7 +14,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 资产主表Entity
  * @author gucl
- * @version 2018-07-15
+ * @version 2019-02-09
  */
 public class BusiAssetMain extends DataEntity<BusiAssetMain> {
 	
@@ -40,6 +40,7 @@ public class BusiAssetMain extends DataEntity<BusiAssetMain> {
 	private String unitPrice;		// 单价
 	private String depreciationWayId;		// 折旧方式
 	private String depreciationPeriod;		// 折旧期限
+	private String tagIssueFlag;		// 标签发行标识（0：未发行（打印）， 1：已发行（打印））
 	
 	public BusiAssetMain() {
 		super();
@@ -233,6 +234,15 @@ public class BusiAssetMain extends DataEntity<BusiAssetMain> {
 
 	public void setDepreciationPeriod(String depreciationPeriod) {
 		this.depreciationPeriod = depreciationPeriod;
+	}
+	
+	@Length(min=0, max=64, message="标签发行标识（0：未发行（打印）， 1：已发行（打印））长度必须介于 0 和 64 之间")
+	public String getTagIssueFlag() {
+		return tagIssueFlag;
+	}
+
+	public void setTagIssueFlag(String tagIssueFlag) {
+		this.tagIssueFlag = tagIssueFlag;
 	}
 	
 }

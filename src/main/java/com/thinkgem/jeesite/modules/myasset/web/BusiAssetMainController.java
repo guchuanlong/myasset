@@ -25,7 +25,7 @@ import com.thinkgem.jeesite.modules.myasset.service.BusiAssetMainService;
 /**
  * 资产主表Controller
  * @author gucl
- * @version 2018-07-15
+ * @version 2019-02-09
  */
 @Controller
 @RequestMapping(value = "${adminPath}/myasset/busiAssetMain")

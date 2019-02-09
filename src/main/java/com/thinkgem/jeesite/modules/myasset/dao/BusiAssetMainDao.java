@@ -10,7 +10,7 @@ import com.thinkgem.jeesite.modules.myasset.entity.BusiAssetMain;
 /**
  * 资产主表DAO接口
  * @author gucl
- * @version 2018-07-15
+ * @version 2019-02-09
  */
 @MyBatisDao
 public interface BusiAssetMainDao extends CrudDao<BusiAssetMain> {

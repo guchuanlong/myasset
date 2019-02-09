@@ -112,6 +112,7 @@ public class BusiAssetLibinBillService extends CrudService<BusiAssetLibinBillDao
 				am.setStatus("1");
 				am.setIsNewRecord(false);
 				am.preInsert();
+				am.setTagIssueFlag("0");//标签未发行
 				assetMainDao.insert(am);
 				if(i==0) {
 					libinBeginGlobalId=assetGlobalId;
