@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.BusiReturnBillDao">
+    
+	<sql id="busiReturnBillColumns">
+		a.id AS "id",
+		a.borrow_bill_id AS "borrowBillId",
+		a.return_bill_no AS "returnBillNo",
+		a.company_id AS "company.id",
+		a.office_id AS "office.id",
+		a.return_person AS "returnPerson",
+		a.return_num AS "returnNum",
+		a.return_date AS "returnDate",
+		a.oper_person AS "operPerson",
+		a.os_platform_id AS "osPlatformId",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		company4.name AS "company.name",
+		o5.name AS "office.name"
+	</sql>
+	
+	<sql id="busiReturnBillJoins">
+		LEFT JOIN sys_office company4 ON company4.id = a.company_id
+		LEFT JOIN sys_office o5 ON o5.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="BusiReturnBill">
+		SELECT 
+			<include refid="busiReturnBillColumns"/>
+		FROM busi_return_bill a
+		<include refid="busiReturnBillJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BusiReturnBill">
+		SELECT 
+			<include refid="busiReturnBillColumns"/>
+		FROM busi_return_bill a
+		<include refid="busiReturnBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BusiReturnBill">
+		SELECT 
+			<include refid="busiReturnBillColumns"/>
+		FROM busi_return_bill a
+		<include refid="busiReturnBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO busi_return_bill(
+			id,
+			borrow_bill_id,
+			return_bill_no,
+			company_id,
+			office_id,
+			return_person,
+			return_num,
+			return_date,
+			oper_person,
+			os_platform_id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{borrowBillId},
+			#{returnBillNo},
+			#{company.id},
+			#{office.id},
+			#{returnPerson},
+			#{returnNum},
+			#{returnDate},
+			#{operPerson},
+			#{osPlatformId},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE busi_return_bill SET 	
+			borrow_bill_id = #{borrowBillId},
+			return_bill_no = #{returnBillNo},
+			company_id = #{company.id},
+			office_id = #{office.id},
+			return_person = #{returnPerson},
+			return_num = #{returnNum},
+			return_date = #{returnDate},
+			oper_person = #{operPerson},
+			os_platform_id = #{osPlatformId},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE busi_return_bill SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>资产主表管理</title>
+	<title>标签发行管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -18,7 +18,7 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/myasset/busiAssetMain/">资产主表列表</a></li>
+		<li class="active"><a href="${ctx}/myasset/busiAssetMain/">标签发行列表</a></li>
 		<shiro:hasPermission name="myasset:busiAssetMain:edit"><li style="display:none;"><a href="${ctx}/myasset/busiAssetMain/form">资产主表添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="busiAssetMain" action="${ctx}/myasset/busiAssetMain/" method="post" class="breadcrumb form-search">
@@ -47,9 +47,6 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>入库单编号</th>
-				<th>资产状态</th>
-				<th>计量单位</th>
 				<th>资产编码</th>
 				<th>EPC编码</th>
 				<th>归属公司</th>
@@ -57,7 +54,10 @@
 				<th>存放地点</th>
 				<th>资产分类</th>
 				<th>资产名称</th>
-				<!-- <th>资产型号</th>
+				<th>资产状态</th>
+				<th>计量单位</th>
+				<th>标签发行状态</th>
+				<!-- 
 				<th>出厂日期</th> -->
 				<shiro:hasPermission name="myasset:busiAssetMain:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -65,15 +65,7 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="busiAssetMain">
 			<tr>
-				<td>
-					${busiAssetMain.libinBillNo}
-				</td>
-				<td>
-					${fns:getDictLabel(busiAssetMain.status, 'myasset_asset_status', '')}
-				</td>
-				<td>
-					${fns:getDictLabel(busiAssetMain.measureUnitId, 'myasset_measure_unit', '')}
-				</td>
+				
 				<td><a href="${ctx}/myasset/busiAssetMain/form?id=${busiAssetMain.id}">
 					${busiAssetMain.assetGlobalId}
 					</a>
@@ -96,15 +88,23 @@
 				<td>
 					${fns:getAssetname(busiAssetMain.assetnameId)}
 				</td>
+				<td>
+					${fns:getDictLabel(busiAssetMain.status, 'myasset_asset_status', '')}
+				</td>
+				<td>
+					${fns:getDictLabel(busiAssetMain.measureUnitId, 'myasset_measure_unit', '')}
+				</td>
+				<td>
+					${fns:getDictLabel(busiAssetMain.tagIssueFlag, 'myasset_tag_issue_flag', '')}
+				</td>
 				<%-- <td>
 					${busiAssetMain.modelFormat}
 				</td>
 				<td>
 					<fmt:formatDate value="${busiAssetMain.produceDate}" pattern="yyyy-MM-dd"/>
 				</td> --%>
-				<shiro:hasPermission name="myasset:busiAssetMain:edit"><td>
-    				<a href="${ctx}/myasset/busiAssetMain/form?id=${busiAssetMain.id}">修改</a>
-					<a href="${ctx}/myasset/busiAssetMain/delete?id=${busiAssetMain.id}" onclick="return confirmx('确认要删除该资产主表吗？', this.href)">删除</a>
+				<shiro:hasPermission name="myasset:busiTagIssue:edit"><td>
+    				<a href="${ctx}/myasset/busiTagIssue/form?id=${busiAssetMain.id}">发行</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

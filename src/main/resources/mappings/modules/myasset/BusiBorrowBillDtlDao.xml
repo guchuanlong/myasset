@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.BusiBorrowBillDtlDao">
+    
+	<sql id="busiBorrowBillDtlColumns">
+		a.id AS "id",
+		a.borrow_bill_id AS "borrowBillId",
+		a.company_id AS "company.id",
+		a.office_id AS "office.id",
+		a.asset_global_id AS "assetGlobalId",
+		a.asset_is_return AS "assetIsReturn",
+		a.os_platform_id AS "osPlatformId",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		company3.name AS "company.name",
+		o4.name AS "office.name"
+	</sql>
+	
+	<sql id="busiBorrowBillDtlJoins">
+		LEFT JOIN busi_borrow_bill b ON b.id = a.borrow_bill_id
+		LEFT JOIN sys_office company3 ON company3.id = a.company_id
+		LEFT JOIN sys_office o4 ON o4.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="BusiBorrowBillDtl">
+		SELECT 
+			<include refid="busiBorrowBillDtlColumns"/>
+		FROM busi_borrow_bill_dtl a
+		<include refid="busiBorrowBillDtlJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BusiBorrowBillDtl">
+		SELECT 
+			<include refid="busiBorrowBillDtlColumns"/>
+		FROM busi_borrow_bill_dtl a
+		<include refid="busiBorrowBillDtlJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="borrowBillId != null and borrowBillId != ''">
+				AND a.borrow_bill_id = #{borrowBillId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BusiBorrowBillDtl">
+		SELECT 
+			<include refid="busiBorrowBillDtlColumns"/>
+		FROM busi_borrow_bill_dtl a
+		<include refid="busiBorrowBillDtlJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO busi_borrow_bill_dtl(
+			id,
+			borrow_bill_id,
+			company_id,
+			office_id,
+			asset_global_id,
+			asset_is_return,
+			os_platform_id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{borrowBillId},
+			#{company.id},
+			#{office.id},
+			#{assetGlobalId},
+			#{assetIsReturn},
+			#{osPlatformId},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE busi_borrow_bill_dtl SET 	
+			borrow_bill_id = #{borrowBillId},
+			company_id = #{company.id},
+			office_id = #{office.id},
+			asset_global_id = #{assetGlobalId},
+			asset_is_return = #{assetIsReturn},
+			os_platform_id = #{osPlatformId},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE busi_borrow_bill_dtl SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE borrow_bill_id = #{borrowBillId}
+			</otherwise>
+		</choose>
+	</update>
+	
+</mapper>

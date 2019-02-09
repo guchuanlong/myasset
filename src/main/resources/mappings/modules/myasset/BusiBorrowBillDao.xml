@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.BusiBorrowBillDao">
+    
+	<sql id="busiBorrowBillColumns">
+		a.id AS "id",
+		a.borrow_bill_no AS "borrowBillNo",
+		a.company_id AS "company.id",
+		a.office_id AS "office.id",
+		a.borrow_person AS "borrowPerson",
+		a.borrow_num AS "borrowNum",
+		a.exp_return_date AS "expReturnDate",
+		a.status AS "status",
+		a.os_platform_id AS "osPlatformId",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		company3.name AS "company.name",
+		o4.name AS "office.name"
+	</sql>
+	
+	<sql id="busiBorrowBillJoins">
+		LEFT JOIN sys_office company3 ON company3.id = a.company_id
+		LEFT JOIN sys_office o4 ON o4.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="BusiBorrowBill">
+		SELECT 
+			<include refid="busiBorrowBillColumns"/>
+		FROM busi_borrow_bill a
+		<include refid="busiBorrowBillJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BusiBorrowBill">
+		SELECT 
+			<include refid="busiBorrowBillColumns"/>
+		FROM busi_borrow_bill a
+		<include refid="busiBorrowBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="borrowBillNo != null and borrowBillNo != ''">
+				AND a.borrow_bill_no = #{borrowBillNo}
+			</if>
+			<if test="company != null and company.id != null and company.id != ''">
+				AND a.company_id = #{company.id}
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
+			</if>
+			<if test="borrowPerson != null and borrowPerson != ''">
+				AND a.borrow_person = #{borrowPerson}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BusiBorrowBill">
+		SELECT 
+			<include refid="busiBorrowBillColumns"/>
+		FROM busi_borrow_bill a
+		<include refid="busiBorrowBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO busi_borrow_bill(
+			id,
+			borrow_bill_no,
+			company_id,
+			office_id,
+			borrow_person,
+			borrow_num,
+			exp_return_date,
+			status,
+			os_platform_id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{borrowBillNo},
+			#{company.id},
+			#{office.id},
+			#{borrowPerson},
+			#{borrowNum},
+			#{expReturnDate},
+			#{status},
+			#{osPlatformId},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE busi_borrow_bill SET 	
+			borrow_bill_no = #{borrowBillNo},
+			company_id = #{company.id},
+			office_id = #{office.id},
+			borrow_person = #{borrowPerson},
+			borrow_num = #{borrowNum},
+			exp_return_date = #{expReturnDate},
+			status = #{status},
+			os_platform_id = #{osPlatformId},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE busi_borrow_bill SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
