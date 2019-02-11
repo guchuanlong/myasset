@@ -64,18 +64,12 @@
 	<form:form id="inputForm" modelAttribute="busiReturnBill" action="${ctx}/myasset/busiReturnBill/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
-		<div class="control-group">
+		<%-- <div class="control-group">
 			<label class="control-label">借用单id：</label>
 			<div class="controls">
 				<form:input path="borrowBillId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">归还单编号：</label>
-			<div class="controls">
-				<form:input path="returnBillNo" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-			</div>
-		</div>
+		</div> --%>
 		<div class="control-group">
 			<label class="control-label">归属公司：</label>
 			<div class="controls">
@@ -97,32 +91,17 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">归还数量：</label>
-			<div class="controls">
-				<form:input path="returnNum" htmlEscape="false" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">归还时间：</label>
 			<div class="controls">
 				<input name="returnDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${busiReturnBill.returnDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${busiReturnBill.returnDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">经办人：</label>
 			<div class="controls">
 				<form:input path="operPerson" htmlEscape="false" maxlength="32" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">操作平台：</label>
-			<div class="controls">
-				<form:select path="osPlatformId" class="input-xlarge ">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('myasset_os_platform')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
 			</div>
 		</div>
 		<div class="control-group">
@@ -139,10 +118,7 @@
 							<tr>
 								<th class="hide"></th>
 								<th>借用单id</th>
-								<th>归属公司</th>
-								<th>归属部门</th>
 								<th>资产id</th>
-								<th>操作平台</th>
 								<th>备注信息</th>
 								<shiro:hasPermission name="myasset:busiReturnBill:edit"><th width="10">&nbsp;</th></shiro:hasPermission>
 							</tr>
@@ -163,24 +139,10 @@
 								<input id="busiReturnBillDtlList{{idx}}_borrowBillId" name="busiReturnBillDtlList[{{idx}}].borrowBillId" type="text" value="{{row.borrowBillId}}" maxlength="64" class="input-small "/>
 							</td>
 							<td>
-							</td>
-							<td>
-								<sys:treeselect id="busiReturnBillDtlList{{idx}}_office" name="busiReturnBillDtlList[{{idx}}].office.id" value="{{row.office.id}}" labelName="busiReturnBillDtlList{{idx}}.office.name" labelValue="{{row.office.name}}"
-									title="部门" url="/sys/office/treeData?type=2" cssClass="" allowClear="true" notAllowSelectParent="true"/>
-							</td>
-							<td>
 								<input id="busiReturnBillDtlList{{idx}}_assetGlobalId" name="busiReturnBillDtlList[{{idx}}].assetGlobalId" type="text" value="{{row.assetGlobalId}}" maxlength="64" class="input-small "/>
 							</td>
 							<td>
-								<select id="busiReturnBillDtlList{{idx}}_osPlatformId" name="busiReturnBillDtlList[{{idx}}].osPlatformId" data-value="{{row.osPlatformId}}" class="input-small ">
-									<option value=""></option>
-									<c:forEach items="${fns:getDictList('myasset_os_platform')}" var="dict">
-										<option value="${dict.value}">${dict.label}</option>
-									</c:forEach>
-								</select>
-							</td>
-							<td>
-								<textarea id="busiReturnBillDtlList{{idx}}_remarks" name="busiReturnBillDtlList[{{idx}}].remarks" rows="4" maxlength="255" class="input-small ">{{row.remarks}}</textarea>
+								<textarea id="busiReturnBillDtlList{{idx}}_remarks" name="busiReturnBillDtlList[{{idx}}].remarks" rows="1" maxlength="255" class="input-small ">{{row.remarks}}</textarea>
 							</td>
 							<shiro:hasPermission name="myasset:busiReturnBill:edit"><td class="text-center" width="10">
 								{{#delBtn}}<span class="close" onclick="delRow(this, '#busiReturnBillDtlList{{idx}}')" title="删除">&times;</span>{{/delBtn}}

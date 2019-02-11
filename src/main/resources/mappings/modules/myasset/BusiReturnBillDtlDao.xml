@@ -5,7 +5,7 @@
 	<sql id="busiReturnBillDtlColumns">
 		a.id AS "id",
 		a.borrow_bill_id AS "borrowBillId",
-		a.return_bill_id AS "returnBillId",
+		a.return_bill_id AS "returnBillId.id",
 		a.company_id AS "company.id",
 		a.office_id AS "office.id",
 		a.asset_global_id AS "assetGlobalId",
@@ -42,7 +42,7 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="returnBillId != null and returnBillId != ''">
-				AND a.return_bill_id = #{returnBillId}
+				AND a.return_bill_id = #{returnBillId.id}
 			</if>
 		</where>
 		<choose>
@@ -91,7 +91,7 @@
 		) VALUES (
 			#{id},
 			#{borrowBillId},
-			#{returnBillId},
+			#{returnBillId.id},
 			#{company.id},
 			#{office.id},
 			#{assetGlobalId},
@@ -108,7 +108,7 @@
 	<update id="update">
 		UPDATE busi_return_bill_dtl SET 	
 			borrow_bill_id = #{borrowBillId},
-			return_bill_id = #{returnBillId},
+			return_bill_id = #{returnBillId.id},
 			company_id = #{company.id},
 			office_id = #{office.id},
 			asset_global_id = #{assetGlobalId},
@@ -127,7 +127,7 @@
 				WHERE id = #{id}
 			</when>
 			<otherwise>
-				WHERE return_bill_id = #{returnBillId}
+				WHERE return_bill_id = #{returnBillId.id}
 			</otherwise>
 		</choose>
 	</update>

@@ -3,16 +3,21 @@
  */
 package com.thinkgem.jeesite.modules.myasset.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.myxapp.sdk.sequence.util.SeqUtil;
+import com.myxapp.sdk.util.DateUtil;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.myasset.entity.BusiReturnBill;
+import com.thinkgem.jeesite.modules.myasset.constant.MyassetConstant;
+import com.thinkgem.jeesite.modules.myasset.constant.SeqConstant;
 import com.thinkgem.jeesite.modules.myasset.dao.BusiReturnBillDao;
 import com.thinkgem.jeesite.modules.myasset.entity.BusiReturnBillDtl;
 import com.thinkgem.jeesite.modules.myasset.dao.BusiReturnBillDtlDao;
@@ -45,11 +50,23 @@ public class BusiReturnBillService extends CrudService<BusiReturnBillDao, BusiRe
 	
 	@Transactional(readOnly = false)
 	public void save(BusiReturnBill busiReturnBill) {
+		String returnBillNo=DateUtil.getDateString(new Date(), "yyyyMMdd")+SeqUtil.getNewId(SeqConstant.RETURN_BILL_NO, 6);
+		//归还单号
+		busiReturnBill.setReturnBillNo(returnBillNo);
+		//操作平台
+		busiReturnBill.setOsPlatformId(MyassetConstant.OsPlatFormId.PC);
+		//归还数量
+		busiReturnBill.setReturnNum(String.valueOf(busiReturnBill.getBusiReturnBillDtlList().size()));
+		
 		super.save(busiReturnBill);
 		for (BusiReturnBillDtl busiReturnBillDtl : busiReturnBill.getBusiReturnBillDtlList()){
 			if (busiReturnBillDtl.getId() == null){
 				continue;
 			}
+			busiReturnBillDtl.setCompany(busiReturnBill.getCompany());
+			busiReturnBillDtl.setOffice(busiReturnBill.getOffice());
+			busiReturnBillDtl.setOsPlatformId(busiReturnBill.getOsPlatformId());
+			
 			if (BusiReturnBillDtl.DEL_FLAG_NORMAL.equals(busiReturnBillDtl.getDelFlag())){
 				if (StringUtils.isBlank(busiReturnBillDtl.getId())){
 					busiReturnBillDtl.setReturnBillId(busiReturnBill);
