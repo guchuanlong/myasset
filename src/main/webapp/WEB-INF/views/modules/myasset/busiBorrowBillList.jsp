@@ -28,11 +28,11 @@
 			<li><label>领用单编号：</label>
 				<form:input path="borrowBillNo" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>领用人归属公司：</label>
+			<li><label>归属公司：</label>
 				<sys:treeselect id="company" name="company.id" value="${busiBorrowBill.company.id}" labelName="company.name" labelValue="${busiBorrowBill.company.name}"
 					title="公司" url="/sys/office/treeData?type=1" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>
-			<li><label>领用人归属部门：</label>
+			<li><label>归属部门：</label>
 				<sys:treeselect id="office" name="office.id" value="${busiBorrowBill.office.id}" labelName="office.name" labelValue="${busiBorrowBill.office.name}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>

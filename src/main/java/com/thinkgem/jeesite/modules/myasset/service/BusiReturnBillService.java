@@ -20,7 +20,7 @@ import com.thinkgem.jeesite.modules.myasset.dao.BusiReturnBillDtlDao;
 /**
  * 资产归还Service
  * @author gucl
- * @version 2019-02-10
+ * @version 2019-02-11
  */
 @Service
 @Transactional(readOnly = true)

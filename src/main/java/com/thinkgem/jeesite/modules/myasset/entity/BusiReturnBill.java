@@ -15,7 +15,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 资产归还Entity
  * @author gucl
- * @version 2019-02-10
+ * @version 2019-02-11
  */
 public class BusiReturnBill extends DataEntity<BusiReturnBill> {
 	

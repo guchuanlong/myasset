@@ -17,6 +17,7 @@ import com.myxapp.sdk.util.DateUtil;
 import com.myxapp.sdk.util.StringUtil;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
+import com.thinkgem.jeesite.modules.myasset.constant.SeqConstant;
 import com.thinkgem.jeesite.modules.myasset.dao.BusiAssetLibinBillDao;
 import com.thinkgem.jeesite.modules.myasset.dao.BusiAssetMainDao;
 import com.thinkgem.jeesite.modules.myasset.dao.BusiStockLibDao;
@@ -33,6 +34,7 @@ import com.thinkgem.jeesite.modules.myasset.entity.BusiStockLib;
 @Transactional(readOnly = true)
 public class BusiAssetLibinBillService extends CrudService<BusiAssetLibinBillDao, BusiAssetLibinBill> {
 
+	
 	@Autowired
 	private BusiAssetMainDao assetMainDao;
 	@Autowired
@@ -55,7 +57,7 @@ public class BusiAssetLibinBillService extends CrudService<BusiAssetLibinBillDao
 		//super.save(busiAssetLibinBill);
 		if (StringUtil.isBlank(libinBill.getId())){
 			libinBill.preInsert();
-			String libinBillNo=DateUtil.getDateString(new Date(), "yyyyMMdd")+SeqUtil.getNewId("LIBIN_BILL_NO", 5);
+			String libinBillNo=DateUtil.getDateString(new Date(), "yyyyMMdd")+SeqUtil.getNewId(SeqConstant.LIBIN_BILL_NO, 5);
 			libinBill.setLibinBillNo(libinBillNo);
 			dao.insert(libinBill);
 			//插入到资产主表
@@ -104,8 +106,8 @@ public class BusiAssetLibinBillService extends CrudService<BusiAssetLibinBillDao
 				BeanUtil.copyProperties(am, libinBill);
 				am.setCompanyId(libinBill.getCompany().getId());
 				am.setStockLibId(stocklibId);
-				String assetGlobalId=SeqUtil.getNewId("ASSET_GLOBAL_ID", 8);
-				String assetRfidTagid=SeqUtil.getNewId16Hex("ASSET_RFID_TAGID", 24);
+				String assetGlobalId=SeqUtil.getNewId(SeqConstant.ASSET_GLOBAL_ID, 8);
+				String assetRfidTagid=SeqUtil.getNewId16Hex(SeqConstant.ASSET_RFID_TAGID, 24);
 				
 				am.setAssetGlobalId(assetGlobalId);
 				am.setAssetRfidTagid(assetRfidTagid);

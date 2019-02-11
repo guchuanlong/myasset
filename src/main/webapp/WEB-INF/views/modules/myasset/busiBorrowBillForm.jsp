@@ -65,12 +65,6 @@
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">领用单编号：</label>
-			<div class="controls">
-				<form:input path="borrowBillNo" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">领用人归属公司：</label>
 			<div class="controls">
 				<sys:treeselect id="company" name="company.id" value="${busiBorrowBill.company.id}" labelName="company.name" labelValue="${busiBorrowBill.company.name}"
@@ -91,35 +85,11 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">领用数量：</label>
-			<div class="controls">
-				<form:input path="borrowNum" htmlEscape="false" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">预期归还时间：</label>
 			<div class="controls">
 				<input name="expReturnDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${busiBorrowBill.expReturnDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">领用单状态：</label>
-			<div class="controls">
-				<form:select path="status" class="input-xlarge ">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('myasset_borrow_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">操作平台（1：pc端，2：手持机）：</label>
-			<div class="controls">
-				<form:select path="osPlatformId" class="input-xlarge ">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('myasset_os_platform')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
+					value="<fmt:formatDate value="${busiBorrowBill.expReturnDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -135,11 +105,7 @@
 						<thead>
 							<tr>
 								<th class="hide"></th>
-								<th>领用人归属公司</th>
-								<th>领用人归属部门</th>
 								<th>资产id</th>
-								<th>资产是否归还</th>
-								<th>操作平台</th>
 								<th>备注信息</th>
 								<shiro:hasPermission name="myasset:busiBorrowBill:edit"><th width="10">&nbsp;</th></shiro:hasPermission>
 							</tr>
@@ -157,32 +123,10 @@
 								<input id="busiBorrowBillDtlList{{idx}}_delFlag" name="busiBorrowBillDtlList[{{idx}}].delFlag" type="hidden" value="0"/>
 							</td>
 							<td>
-							</td>
-							<td>
-								<sys:treeselect id="busiBorrowBillDtlList{{idx}}_office" name="busiBorrowBillDtlList[{{idx}}].office.id" value="{{row.office.id}}" labelName="busiBorrowBillDtlList{{idx}}.office.name" labelValue="{{row.office.name}}"
-									title="部门" url="/sys/office/treeData?type=2" cssClass="" allowClear="true" notAllowSelectParent="true"/>
-							</td>
-							<td>
 								<input id="busiBorrowBillDtlList{{idx}}_assetGlobalId" name="busiBorrowBillDtlList[{{idx}}].assetGlobalId" type="text" value="{{row.assetGlobalId}}" maxlength="64" class="input-small "/>
 							</td>
 							<td>
-								<select id="busiBorrowBillDtlList{{idx}}_assetIsReturn" name="busiBorrowBillDtlList[{{idx}}].assetIsReturn" data-value="{{row.assetIsReturn}}" class="input-small ">
-									<option value=""></option>
-									<c:forEach items="${fns:getDictList('myasset_is_return')}" var="dict">
-										<option value="${dict.value}">${dict.label}</option>
-									</c:forEach>
-								</select>
-							</td>
-							<td>
-								<select id="busiBorrowBillDtlList{{idx}}_osPlatformId" name="busiBorrowBillDtlList[{{idx}}].osPlatformId" data-value="{{row.osPlatformId}}" class="input-small ">
-									<option value=""></option>
-									<c:forEach items="${fns:getDictList('myasset_os_platform')}" var="dict">
-										<option value="${dict.value}">${dict.label}</option>
-									</c:forEach>
-								</select>
-							</td>
-							<td>
-								<textarea id="busiBorrowBillDtlList{{idx}}_remarks" name="busiBorrowBillDtlList[{{idx}}].remarks" rows="4" maxlength="255" class="input-small ">{{row.remarks}}</textarea>
+								<textarea id="busiBorrowBillDtlList{{idx}}_remarks" name="busiBorrowBillDtlList[{{idx}}].remarks" rows="1" maxlength="100" class="input-small ">{{row.remarks}}</textarea>
 							</td>
 							<shiro:hasPermission name="myasset:busiBorrowBill:edit"><td class="text-center" width="10">
 								{{#delBtn}}<span class="close" onclick="delRow(this, '#busiBorrowBillDtlList{{idx}}')" title="删除">&times;</span>{{/delBtn}}

@@ -25,7 +25,7 @@ import com.thinkgem.jeesite.modules.myasset.service.BusiReturnBillService;
 /**
  * 资产归还Controller
  * @author gucl
- * @version 2019-02-10
+ * @version 2019-02-11
  */
 @Controller
 @RequestMapping(value = "${adminPath}/myasset/busiReturnBill")

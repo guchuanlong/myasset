@@ -10,7 +10,7 @@ import com.thinkgem.jeesite.modules.myasset.entity.BusiReturnBill;
 /**
  * 资产归还DAO接口
  * @author gucl
- * @version 2019-02-10
+ * @version 2019-02-11
  */
 @MyBatisDao
 public interface BusiReturnBillDao extends CrudDao<BusiReturnBill> {

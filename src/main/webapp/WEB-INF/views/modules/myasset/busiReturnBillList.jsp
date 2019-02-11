@@ -25,6 +25,34 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>归还单编号：</label>
+				<form:input path="returnBillNo" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
+			<li><label>归属公司：</label>
+				<sys:treeselect id="company" name="company.id" value="${busiReturnBill.company.id}" labelName="company.name" labelValue="${busiReturnBill.company.name}"
+					title="公司" url="/sys/office/treeData?type=1" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
+			</li>
+			<li><label>归属部门：</label>
+				<sys:treeselect id="office" name="office.id" value="${busiReturnBill.office.id}" labelName="office.name" labelValue="${busiReturnBill.office.name}"
+					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
+			</li>
+			<li><label>归还人：</label>
+				<form:input path="returnPerson" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
+			<li><label>归还时间：</label>
+				<input name="returnDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${busiReturnBill.returnDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+			</li>
+			<li><label>经办人：</label>
+				<form:input path="operPerson" htmlEscape="false" maxlength="32" class="input-medium"/>
+			</li>
+			<li><label>操作平台：</label>
+				<form:select path="osPlatformId" class="input-medium">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('myasset_os_platform')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
