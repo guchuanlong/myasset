@@ -18,4 +18,13 @@
 <script src="${ctxStatic}/common/mustache.min.js" type="text/javascript"></script>
 <link href="${ctxStatic}/common/jeesite.css" type="text/css" rel="stylesheet" />
 <script src="${ctxStatic}/common/jeesite.js" type="text/javascript"></script>
+<script src="${ctxStatic}/jsviews/jsrender.js" type="text/javascript"></script>
+<script src="${ctxStatic}/jsviews/jsviews.js" type="text/javascript"></script>
+<script src="${ctxStatic}/bootbox/bootbox.js" type="text/javascript"></script>
+<script src="${ctxStatic}/ajaxhelper/jquery.form.min.js" type="text/javascript"></script>
+<script src="${ctxStatic}/ajaxhelper/jquery.pagcontroller.js" type="text/javascript"></script>
+<script src="${ctxStatic}/twbs-pagination/jquery.twbsPagination.js" type="text/javascript"></script>
+<script src="${ctxStatic}/runnerpagination/runner.pagination.js" type="text/javascript"></script>
+<script src="${ctxStatic}/myutil/jquery-validate-ext.js" type="text/javascript"></script>
+<script src="${ctxStatic}/myutil/jsviews-ext.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '${ctx}', ctxStatic='${ctxStatic}';</script>
