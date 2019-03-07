@@ -27,4 +27,4 @@
 <script src="${ctxStatic}/runnerpagination/runner.pagination.js" type="text/javascript"></script>
 <script src="${ctxStatic}/myutil/jquery-validate-ext.js" type="text/javascript"></script>
 <script src="${ctxStatic}/myutil/jsviews-ext.js" type="text/javascript"></script>
-<script type="text/javascript">var ctx = '${ctx}', ctxStatic='${ctxStatic}';</script>
+<script type="text/javascript">var _base = '${_base}',ctx = '${ctx}', ctxStatic='${ctxStatic}';</script>

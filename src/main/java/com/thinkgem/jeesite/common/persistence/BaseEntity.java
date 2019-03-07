@@ -9,9 +9,8 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
@@ -79,6 +78,7 @@ public abstract class BaseEntity<T> implements Serializable {
 	
 	@JsonIgnore
 	@XmlTransient
+	@JSONField(serialize = false)
 	public User getCurrentUser() {
 		if(currentUser == null){
 			currentUser = UserUtils.getUser();
@@ -92,6 +92,7 @@ public abstract class BaseEntity<T> implements Serializable {
 
 	@JsonIgnore
 	@XmlTransient
+	@JSONField(serialize = false)
 	public Page<T> getPage() {
 		if (page == null){
 			page = new Page<T>();
@@ -106,6 +107,7 @@ public abstract class BaseEntity<T> implements Serializable {
 
 	@JsonIgnore
 	@XmlTransient
+	@JSONField(serialize = false)
 	public Map<String, String> getSqlMap() {
 		if (sqlMap == null){
 			sqlMap = Maps.newHashMap();
@@ -148,6 +150,7 @@ public abstract class BaseEntity<T> implements Serializable {
 	 * 全局变量对象
 	 */
 	@JsonIgnore
+	@JSONField(serialize = false)
 	public Global getGlobal() {
 		return Global.getInstance();
 	}
@@ -156,6 +159,7 @@ public abstract class BaseEntity<T> implements Serializable {
 	 * 获取数据库名称
 	 */
 	@JsonIgnore
+	@JSONField(serialize = false)
 	public String getDbName(){
 		return Global.getConfig("jdbc.type");
 	}

@@ -8,11 +8,11 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myxapp.sdk.sequence.util.SeqUtil;
 import com.myxapp.sdk.util.Underline2Camel;
-import com.thinkgem.jeesite.common.utils.IdGen;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
@@ -85,6 +85,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 	}
 	
 	@JsonIgnore
+	//@JSONField(serialize = false)
 	public User getCreateBy() {
 		return createBy;
 	}
@@ -103,6 +104,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 	}
 
 	@JsonIgnore
+	//@JSONField(serialize = false)
 	public User getUpdateBy() {
 		return updateBy;
 	}

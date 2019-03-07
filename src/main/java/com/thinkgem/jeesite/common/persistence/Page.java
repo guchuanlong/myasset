@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.common.persistence;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -22,13 +23,13 @@ import com.thinkgem.jeesite.common.utils.CookieUtils;
  * @version 2013-7-2
  * @param <T>
  */
-public class Page<T> {
+public class Page<T> implements Serializable{
 	
 	private int pageNo = 1; // 当前页码
 	private int pageSize = Integer.valueOf(Global.getConfig("page.pageSize")); // 页面大小，设置为“-1”表示不进行分页（分页无效）
 	
 	private long count;// 总记录数，设置为“-1”表示不查询总数
-	
+	private long pageCount;// 总页数
 	private int first;// 首页索引
 	private int last;// 尾页索引
 	private int prev;// 上一页索引
@@ -50,6 +51,14 @@ public class Page<T> {
 	
 	private String message = ""; // 设置提示消息，显示在“共n条”之后
 
+	/**
+     * 是否业务成功
+     */
+    private boolean success;
+    
+    private long startRowIndex;
+    private long endRowIndex;
+    
 	public Page() {
 		this.pageSize = -1;
 	}
@@ -537,6 +546,50 @@ public class Page<T> {
 	 */
 	public int getMaxResults(){
 		return getPageSize();
+	}
+	
+	public long getPageCount() {
+    	long quotient = this.getCount() / this.getPageSize();
+    	long remainder = this.getCount() % this.getPageSize();
+        pageCount = quotient;
+        if (remainder > 0) {
+            pageCount += 1;
+        }
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+    
+    /**
+     * 获取开始行
+     * 
+     * @return
+     * @author gucl
+     */
+    public long getStartRowIndex() {
+    	startRowIndex=(this.getPageNo() - 1) * this.getPageSize();
+        return startRowIndex;
+    }
+
+    /**
+     * 获取结束行
+     * 
+     * @return
+     * @author gucl
+     */
+    public long getEndRowIndex() {
+    	endRowIndex=this.getPageNo() * this.getPageSize();
+        return endRowIndex;
+    }
+    
+    public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
 
 //	/**

@@ -71,6 +71,9 @@
 			<if test="assetnameId != null and assetnameId != ''">
 				AND a.assetname_id = #{assetnameId}
 			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
