@@ -54,7 +54,41 @@
 				$(obj).parent().parent().removeClass("error");
 			}
 		}
+		
+		
+		function popChooseAssetMain(){
+			var url=_base+'/myasset/chooseBusiAssetMain/list';
+			console.log('url='+url);
+			 $.get(url, function (data) {
+	                //messageController.hideWait();
+	                var options={
+	                		// dialog的类名
+	                		className: "my-modal",
+	                		title : "选择资产",
+	        				message : data,
+	        				callback:function () {
+	        					    //alert("call");
+	        	                    
+	        	                    
+	                        },
+	                        buttons:{
+	                        	ok:{
+	                        		label:'确定'
+	                        	}
+	                        }
+	                };
+	                bootbox.alert(options);
+	                
+	            });
+		}
+		
 	</script>
+	<style>
+		.my-modal {
+    width: 800px;
+    /* height: 800px; */
+}
+	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
@@ -113,7 +147,8 @@
 						<tbody id="busiBorrowBillDtlList">
 						</tbody>
 						<shiro:hasPermission name="myasset:busiBorrowBill:edit"><tfoot>
-							<tr><td colspan="8"><a href="javascript:" onclick="addRow('#busiBorrowBillDtlList', busiBorrowBillDtlRowIdx, busiBorrowBillDtlTpl);busiBorrowBillDtlRowIdx = busiBorrowBillDtlRowIdx + 1;" class="btn">新增</a></td></tr>
+							<tr><td colspan="8"><a href="javascript:" onclick="_showAssetList();" class="btn">新增</a></td></tr>
+							<!-- addRow('#busiBorrowBillDtlList', busiBorrowBillDtlRowIdx, busiBorrowBillDtlTpl);busiBorrowBillDtlRowIdx = busiBorrowBillDtlRowIdx + 1; -->
 						</tfoot></shiro:hasPermission>
 					</table>
 					<script type="text/template" id="busiBorrowBillDtlTpl">//<!--
@@ -150,5 +185,8 @@
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>
+	
+	<%@include file="/WEB-INF/views/modules/myasset/ejectChooseAssetList.jsp" %>
+	
 </body>
 </html>

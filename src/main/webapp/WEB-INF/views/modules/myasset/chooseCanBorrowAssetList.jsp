@@ -3,27 +3,18 @@
 <html>
 <head>
 	<title>选择资产</title>
-	<meta name="decorator" content="default"/>
-	<script type="text/javascript" src="${_base }/jsasset/chooseCanBorrowAssetList.js"></script>
 </head>
-<body>
+<body >
 	
 	<form id="searchForm"  class="breadcrumb form-search">
-		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
 			<li><label>资产编号：</label>
-				<form:input path="borrowBillNo" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<input  maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>归属公司：</label>
-				<sys:treeselect id="company" name="company.id" value="${busiBorrowBill.company.id}" labelName="company.name" labelValue="${busiBorrowBill.company.name}"
-					title="公司" url="/sys/office/treeData?type=1" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
+			<li><label>资产名称：</label>
+				<input  maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>归属部门：</label>
-				<sys:treeselect id="office" name="office.id" value="${busiBorrowBill.office.id}" labelName="office.name" labelValue="${busiBorrowBill.office.name}"
-					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
-			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="button" value="查询"/></li>
+			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="button" onclick="queryAssetList()" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
 	</form>
@@ -43,7 +34,7 @@
 			
 		</tbody>
 	</table>
-	<%-- <div class="pagination">${page}</div> --%>
+	
 	  <!--分页-->
 	<div class="m-pag">
 		<div class="paging paging-large">
@@ -56,7 +47,6 @@
 	
 	
 	<script id = "canBorrowAssetTmpl" type="text/x-jsrender">
-
 		<tr>
 				<td><input type="checkbox"/></td>
 				<td>
@@ -75,12 +65,49 @@
 					{{:office.name}}
 				</td>
 				<td>
-					{{:borrowPerson}}
+					{{:assetnameId}}
 				</td>
 				<td>
 					xxx
 				</td>
 			</tr>
+	</script>
+	
+	
+	<script type="text/javascript">
+	$(function(){
+		//queryAssetList();
+	});
+	$(document).ready(function() { 
+		//queryAssetList();
+	}); 
+	window.onload = function(){ 
+		queryAssetList();
+	} 
+	function queryAssetList(){
+
+		$("#asset-pagination").runnerPagination({
+			url: _base+"/myasset/chooseBusiAssetMain/chooseAssetList"+"?ajax_req_random="+new Date().getTime(),
+			method: "POST",
+			dataType: "json",
+			//processing: true,
+			//renderId:"canBorrowAssetList",
+			//messageId:"cmcChl-showMessageDiv",
+			data : {},
+			pageSize:  5,
+			visiblePages:5,
+			message: "正在为您查询数据..",
+			render: function (data) {
+				if(data != null && data != 'undefined' ){
+					
+					var template = $.templates("#canBorrowAssetTmpl");
+					var htmlOutput = template.render(data.list);
+					$("#canBorrowAssetList").html(htmlOutput);
+					
+				}
+			}
+		});
+	}
 	</script>
 </body>
 </html>

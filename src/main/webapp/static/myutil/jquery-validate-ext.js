@@ -142,19 +142,6 @@ $.validator.addMethod( "latitude", function( value, element, param ) {
 
 }, $.validator.format( "请输入正确的格式如：36.630778" ) );
 
-var CountWordsUtil = require("app/util/count-words");
-/**
- * FUNCTION: 字数统计不能超过最大限制
- * PARAMETER: 字符串s
- * RETURNS: true/false
- */
-$.validator.addMethod( "wordsMax", function( value, element, param ) {
-	if(param==false)return true;
-	/*如果参数值存在，则进行校验*/
-	var valid = CountWordsUtil.count(value) > 2000? false:true;
-	return valid;
-}, $.validator.format( "超出最大长度" ) );
-
 /**
 * FUNCTION: isDate 校验日期是否合法yyyy-mm-dd这种格式的日期
 * PARAMETER: 字符串s

@@ -43,24 +43,24 @@
         	var pageSize = opt.pageSize?opt.pageSize:10;
         	data.pageSize = pageSize;
         	data.currentPage = currentPage;
-        	ajaxController.ajax({
+        	data.pageNo = currentPage;
+        	$.ajax({
         		url: opt.url,
  	 			method: opt.method,
  	 			dataType: opt.dataType,
- 	            showWait: opt.showWait,
+ 	            //showWait: opt.showWait,
  	            data: data,
  	            message: opt.message,
  	            success: function (resp) {
- 	            	var d = (resp && resp.data)?resp.data:{};
- 	                opt.render && opt.render.call(_this,d.result);
+ 	            	var d = resp;
+ 	                opt.render && opt.render.call(_this,d);
  	                opt.callback && opt.callback.call(_this,d);
- 	                var pager = d.pager?d.pager:{};
- 	                _this.setupTwbsPagination(pager.totalPages);
+ 	                _this.setupTwbsPagination(d.pageCount,currentPage);
  	            }
         	});
         },
         
-        setupTwbsPagination: function(totalPages){
+        setupTwbsPagination: function(totalPages,currentPage){
         	var _this = this;
         	var opt = _this.options;
         	if(this._tp){
@@ -68,7 +68,7 @@
         	}
         	var _tp = this.$element.twbsPagination({
                 totalPages: totalPages,
-                startPage: opt.startPage,
+                startPage: currentPage,
                 visiblePages: opt.visiblePages,
                 first: opt.first,
                 prev: opt.prev,
