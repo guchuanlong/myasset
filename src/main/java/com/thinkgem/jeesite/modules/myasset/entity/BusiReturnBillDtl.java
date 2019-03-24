@@ -17,12 +17,51 @@ public class BusiReturnBillDtl extends DataEntity<BusiReturnBillDtl> {
 	
 	private static final long serialVersionUID = 1L;
 	private String borrowBillId;		// 借用单id
+	private String borrowBillDtlId;		// 借用单id
 	private BusiReturnBill returnBillId;		// 归还单id 父类
 	private Office company;		// 归属公司
 	private Office office;		// 归属部门
 	private String assetGlobalId;		// 资产id
 	private String osPlatformId;		// 操作平台
 	
+	//================
+	private BusiPlace place;		// 存放地点
+	private BusiCategory category;		// 资产分类
+	private BusiAssetname assetname;		// 资产名称
+	
+	
+	public String getBorrowBillDtlId() {
+		return borrowBillDtlId;
+	}
+
+	public void setBorrowBillDtlId(String borrowBillDtlId) {
+		this.borrowBillDtlId = borrowBillDtlId;
+	}
+
+	public BusiPlace getPlace() {
+		return place;
+	}
+
+	public void setPlace(BusiPlace place) {
+		this.place = place;
+	}
+
+	public BusiCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(BusiCategory category) {
+		this.category = category;
+	}
+
+	public BusiAssetname getAssetname() {
+		return assetname;
+	}
+
+	public void setAssetname(BusiAssetname assetname) {
+		this.assetname = assetname;
+	}
+
 	public BusiReturnBillDtl() {
 		super();
 	}

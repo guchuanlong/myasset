@@ -73,6 +73,7 @@ public class BusiBorrowBillService extends CrudService<BusiBorrowBillDao, BusiBo
 			busiBorrowBillDtl.setCompany(busiBorrowBill.getCompany());
 			busiBorrowBillDtl.setOffice(busiBorrowBill.getOffice());
 			busiBorrowBillDtl.setOsPlatformId(busiBorrowBill.getOsPlatformId());
+			//单个资产借用状态
 			busiBorrowBillDtl.setAssetIsReturn(MyassetConstant.AssetIsReturn.NOT_RETURN);
 			busiBorrowBillDtl.setBorrowBillId(busiBorrowBill);
 			busiBorrowBillDtl.preInsert();

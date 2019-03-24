@@ -5,6 +5,8 @@
 	<sql id="busiBorrowBillDtlColumns">
 		a.id AS "id",
 		a.borrow_bill_id AS "borrowBillId.id",
+		b.borrow_person AS "borrowBillId.borrowPerson",
+		b.borrow_bill_no AS "borrowBillId.borrowBillNo",
 		a.company_id AS "company.id",
 		a.office_id AS "office.id",
 		a.asset_global_id AS "assetGlobalId",
@@ -51,8 +53,17 @@
 		<include refid="busiBorrowBillDtlJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="borrowBillId != null and borrowBillId != ''">
+			<if test="borrowBillId != null and borrowBillId != '' and borrowBillId.id != null and borrowBillId.id != '' ">
 				AND a.borrow_bill_id = #{borrowBillId.id}
+			</if>
+			<if test="borrowBillId != null and borrowBillId != '' and borrowBillId.borrowBillNo != null and borrowBillId.borrowBillNo != '' ">
+				AND b.borrow_bill_no = #{borrowBillId.borrowBillNo}
+			</if>
+			<if test="assetGlobalId != null and assetGlobalId != ''">
+				AND a.asset_global_id = #{assetGlobalId}
+			</if>
+			<if test="assetname != null and assetname != '' and assetname.name != null and assetname.name != ''">
+				AND assetname.name like  concat('%',concat(#{assetname.name},'%'))  
 			</if>
 		</where>
 		<choose>
@@ -129,6 +140,7 @@
 		WHERE id = #{id}
 	</update>
 	
+	
 	<!-- <update id="delete">
 		UPDATE busi_borrow_bill_dtl SET 
 			del_flag = #{DEL_FLAG_DELETE}
@@ -141,16 +153,25 @@
 			</otherwise>
 		</choose>
 	</update> -->
+	<!-- 只删除未归还的，已归还的资产不能删除 -->
 	<update id="delete">
 		delete from busi_borrow_bill_dtl 
 		<choose>
 			<when test="id !=null and id != ''">
-				WHERE id = #{id}
+				WHERE asset_is_return='0' and id = #{id}
 			</when>
 			<otherwise>
 				WHERE borrow_bill_id = #{borrowBillId.id}
 			</otherwise>
 		</choose>
 	</update>
-	
+	<select id="countNoReturnByBorrowBillId" resultType="java.lang.Long">
+		select count(1) from busi_borrow_bill_dtl 
+		WHERE asset_is_return='0' and borrow_bill_id = #{borrowBillId.id}
+	</select>
+	<update id="updateAssetIsReturnByDtlId">
+		UPDATE busi_borrow_bill_dtl SET 
+			asset_is_return = #{assetIsReturn}
+		WHERE id = #{id}
+	</update>
 </mapper>

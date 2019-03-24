@@ -15,4 +15,6 @@ import com.thinkgem.jeesite.modules.myasset.entity.BusiBorrowBill;
 @MyBatisDao
 public interface BusiBorrowBillDao extends CrudDao<BusiBorrowBill> {
 	
+	public int updateStatusById(BusiBorrowBill entity);
+	
 }

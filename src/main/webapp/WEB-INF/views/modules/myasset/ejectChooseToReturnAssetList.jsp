@@ -9,6 +9,13 @@
 			<div class="new-fm">
 				<ul>
 					<li>
+						<p class="bt">领用单号：</p>
+						<p>
+							<input name="paramBorrowBillNo" id="paramBorrowBillNo"
+								type="text" class="int-text int-small">
+						</p>
+					</li>
+					<li>
 						<p class="bt">资产编码：</p>
 						<p>
 							<input name="paramAssetGlobalId" id="paramAssetGlobalId"
@@ -39,12 +46,12 @@
 					<thead>
 						<tr>
 							<th>选择</th>
+							<th>领用单号</th>
 							<th>资产编码</th>
 							<th>资产分类</th>
 							<th>资产名称</th>
 							<th>归属公司</th>
 							<th>归属部门</th>
-							<th>存放地点</th>
 						</tr>
 					</thead>
 					<tbody id="canChooseAssetList">
@@ -77,7 +84,11 @@
 		<tr  >
 				<td><input type="checkbox"  assetGlobalId="{{:assetGlobalId}}" categoryName="{{:category.name}}" 
 			assetname="{{:assetname.name}}"  companyName="{{:company.name}}" companyId="{{:company.id}}"
-			officeName="{{:company.name}}" officeId="{{:company.id}}" placeName="{{:place.name}}"/ ></td>
+			officeName="{{:company.name}}" officeId="{{:company.id}}" placeName="{{:place.name}}"
+			borrowBillDtlId="{{:id}}" borrowBillId="{{:borrowBillId.id}}" borrowBillNo="{{:borrowBillId.borrowBillNo}}" / ></td>
+				<td>
+					{{:borrowBillId.borrowBillNo}}
+				</td>
 				<td>
 					{{:assetGlobalId}}
 				</td>
@@ -92,9 +103,6 @@
 				</td>
 				<td>
 					{{:office.name}}
-				</td>
-				<td>
-					{{:place.name}}
 				</td>
 			</tr>
 </script>
@@ -102,7 +110,11 @@
 <script id="hasChooseAssetTmpl" type="text/x-jsrender">
 		<tr  assetGlobalId="{{:assetGlobalId}}" categoryName="{{:category.name}}" 
 			assetname="{{:assetname.name}}"  companyName="{{:company.name}}" companyId="{{:company.id}}"
-			officeName="{{:company.name}}" officeId="{{:company.id}}" placeName="{{:place.name}}">
+			officeName="{{:company.name}}" officeId="{{:company.id}}" placeName="{{:place.name}}"
+			borrowBillDtlId="{{:borrowBillDtlId}}" borrowBillId="{{:borrowBillId}}" borrowBillNo="{{:borrowBillNo}}" >
+				<td>
+					{{:borrowBillNo}}
+				</td>				
 				<td>
 					{{:assetGlobalId}}
 				</td>
@@ -117,9 +129,6 @@
 				</td>
 				<td>
 					{{:office.name}}
-				</td>
-				<td>
-					{{:place.name}}
 				</td>
 				<td>
 					<a href="javascript:void(0)" name="chooseAssetDel">删除</a>
@@ -149,6 +158,9 @@
 		$("#hasChooseAssetDtlList tr").each(function () {
 			var tmpObj = {};
 			tmpObj.delFlag = "0";
+			tmpObj.borrowBillDtlId = $(this).attr("borrowBillDtlId");
+			tmpObj.borrowBillId = $(this).attr("borrowBillId");
+			tmpObj.borrowBillNo = $(this).attr("borrowBillNo");
 			tmpObj.assetGlobalId = $(this).attr("assetGlobalId");
 			tmpObj.category = {"name": $(this).attr("categoryName")};
 			tmpObj.assetname = {"name": $(this).attr("assetname")};
@@ -158,7 +170,7 @@
 			hasAssets.push(tmpObj);
 		});
 		var tmpDtlListStr=JSON.stringify(hasAssets);
-		console.log('toBorrowDtlListStr:'+tmpDtlListStr);
+		console.log('toReturnDtlListStr:'+tmpDtlListStr);
 		$("#paramHasChooseAsset").val(tmpDtlListStr);
 	}
 	function _loadChooseAssetFromDb(data){
@@ -176,6 +188,9 @@
 			var tmpObj = {};
 			// tmpObj.govContactId = $(this).attr("govContactId");
 			tmpObj.delFlag = "0";
+			tmpObj.borrowBillDtlId = $(this).attr("borrowBillDtlId");
+			tmpObj.borrowBillId = $(this).attr("borrowBillId");
+			tmpObj.borrowBillNo = $(this).attr("borrowBillNo");
 			tmpObj.assetGlobalId = $(this).attr("assetGlobalId");
 			tmpObj.category = {"name": $(this).attr("categoryName")};
 			tmpObj.assetname = {"name": $(this).attr("assetname")};
@@ -203,7 +218,7 @@
 		$("#asset-pagination").runnerPagination(
 				{
 					url : _base
-							+ "/myasset/chooseBusiAssetMain/chooseAssetList"
+							+ "/myasset/chooseBusiAssetMain/queryBorrowAssetList"
 							+ "?ajax_req_random=" + new Date().getTime(),
 					method : "POST",
 					dataType : "json",
@@ -211,7 +226,7 @@
 					//renderId:"canChooseAssetList",
 					//messageId:"cmcChl-showMessageDiv",
 					data : {
-						"paramStatus" : "1",
+						"paramBorrowBillNo" : $("#paramBorrowBillNo").val(),
 						"paramAssetName" : $("#paramAssetName").val(),
 						"paramAssetGlobalId" : $("#paramAssetGlobalId").val()
 					},

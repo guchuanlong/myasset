@@ -5,6 +5,7 @@
 	<sql id="busiReturnBillDtlColumns">
 		a.id AS "id",
 		a.borrow_bill_id AS "borrowBillId",
+		a.borrow_bill_dtl_id AS "borrowBillDtlId",
 		a.return_bill_id AS "returnBillId.id",
 		a.company_id AS "company.id",
 		a.office_id AS "office.id",
@@ -17,6 +18,12 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		company4.name AS "company.name",
+		category.id AS "category.id",
+		category.name AS "category.name",
+		assetname.id AS "assetname.id",
+		assetname.name AS "assetname.name",
+		place.id AS "place.id",
+		place.name AS "place.name",
 		o5.name AS "office.name"
 	</sql>
 	
@@ -24,6 +31,10 @@
 		LEFT JOIN busi_return_bill b ON b.id = a.return_bill_id
 		LEFT JOIN sys_office company4 ON company4.id = a.company_id
 		LEFT JOIN sys_office o5 ON o5.id = a.office_id
+		left join busi_asset_main m on m.id=a.asset_global_id
+		LEFT JOIN busi_category category ON category.id = m.category_id
+		left join busi_assetname assetname on assetname.id=m.assetname_id
+		left join busi_place place on place.id=m.place_id
 	</sql>
     
 	<select id="get" resultType="BusiReturnBillDtl">
@@ -77,6 +88,7 @@
 		INSERT INTO busi_return_bill_dtl(
 			id,
 			borrow_bill_id,
+			borrow_bill_dtl_id,
 			return_bill_id,
 			company_id,
 			office_id,
@@ -91,6 +103,7 @@
 		) VALUES (
 			#{id},
 			#{borrowBillId},
+			#{borrowBillDtlId},
 			#{returnBillId.id},
 			#{company.id},
 			#{office.id},
@@ -108,6 +121,7 @@
 	<update id="update">
 		UPDATE busi_return_bill_dtl SET 	
 			borrow_bill_id = #{borrowBillId},
+			borrow_bill_dtl_id = #{borrowBillDtlId},
 			return_bill_id = #{returnBillId.id},
 			company_id = #{company.id},
 			office_id = #{office.id},

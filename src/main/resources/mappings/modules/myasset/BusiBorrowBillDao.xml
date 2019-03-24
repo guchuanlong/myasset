@@ -144,4 +144,12 @@
 		WHERE id = #{id}
 	</update>
 	
+	<update id="updateStatusById">
+		UPDATE busi_borrow_bill SET 	
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
 </mapper>

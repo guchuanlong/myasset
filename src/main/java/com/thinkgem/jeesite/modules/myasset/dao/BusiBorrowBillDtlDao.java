@@ -15,4 +15,7 @@ import com.thinkgem.jeesite.modules.myasset.entity.BusiBorrowBillDtl;
 @MyBatisDao
 public interface BusiBorrowBillDtlDao extends CrudDao<BusiBorrowBillDtl> {
 	
+	public long countNoReturnByBorrowBillId(BusiBorrowBillDtl entity);
+	public int updateAssetIsReturnByDtlId(BusiBorrowBillDtl entity);
+	
 }
