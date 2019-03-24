@@ -10,6 +10,17 @@ public class MyassetConstant {
 		public static final String PDA = "2";
 		
 	}
+	public static final class AssetStatus {
+		//借用单状态（1-在库；2-使用；3-维护；4-报废）
+		
+		private AssetStatus() {}
+		
+		public static final String STOCK = "1";
+		public static final String USING = "2";
+		public static final String MAINTAIN = "3";
+		public static final String SCRAP = "3";
+		
+	}
 	public static final class BorrowBillStatus {
 		//借用单状态（0-全部未归还；1-部分归还；2-全部归还）
 		

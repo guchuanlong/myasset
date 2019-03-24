@@ -17,6 +17,12 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		company3.name AS "company.name",
+		category.id AS "category.id",
+		category.name AS "category.name",
+		assetname.id AS "assetname.id",
+		assetname.name AS "assetname.name",
+		place.id AS "place.id",
+		place.name AS "place.name",
 		o4.name AS "office.name"
 	</sql>
 	
@@ -24,6 +30,10 @@
 		LEFT JOIN busi_borrow_bill b ON b.id = a.borrow_bill_id
 		LEFT JOIN sys_office company3 ON company3.id = a.company_id
 		LEFT JOIN sys_office o4 ON o4.id = a.office_id
+		left join busi_asset_main m on m.id=a.asset_global_id
+		LEFT JOIN busi_category category ON category.id = m.category_id
+		left join busi_assetname assetname on assetname.id=m.assetname_id
+		left join busi_place place on place.id=m.place_id
 	</sql>
     
 	<select id="get" resultType="BusiBorrowBillDtl">
@@ -119,9 +129,20 @@
 		WHERE id = #{id}
 	</update>
 	
-	<update id="delete">
+	<!-- <update id="delete">
 		UPDATE busi_borrow_bill_dtl SET 
 			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE borrow_bill_id = #{borrowBillId.id}
+			</otherwise>
+		</choose>
+	</update> -->
+	<update id="delete">
+		delete from busi_borrow_bill_dtl 
 		<choose>
 			<when test="id !=null and id != ''">
 				WHERE id = #{id}

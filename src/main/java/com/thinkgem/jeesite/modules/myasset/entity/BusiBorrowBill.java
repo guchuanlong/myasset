@@ -30,6 +30,7 @@ public class BusiBorrowBill extends DataEntity<BusiBorrowBill> {
 	private String osPlatformId;		// 操作平台（1：pc端，2：手持机）
 	private List<BusiBorrowBillDtl> busiBorrowBillDtlList = Lists.newArrayList();		// 子表列表
 	
+
 	public BusiBorrowBill() {
 		super();
 	}

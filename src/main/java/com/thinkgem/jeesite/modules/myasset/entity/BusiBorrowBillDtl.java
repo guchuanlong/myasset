@@ -23,6 +23,36 @@ public class BusiBorrowBillDtl extends DataEntity<BusiBorrowBillDtl> {
 	private String assetIsReturn;		// 资产是否归还
 	private String osPlatformId;		// 操作平台
 	
+	//================
+	private BusiPlace place;		// 存放地点
+	private BusiCategory category;		// 资产分类
+	private BusiAssetname assetname;		// 资产名称
+	
+	
+	public BusiPlace getPlace() {
+		return place;
+	}
+
+	public void setPlace(BusiPlace place) {
+		this.place = place;
+	}
+
+	public BusiCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(BusiCategory category) {
+		this.category = category;
+	}
+
+	public BusiAssetname getAssetname() {
+		return assetname;
+	}
+
+	public void setAssetname(BusiAssetname assetname) {
+		this.assetname = assetname;
+	}
+
 	public BusiBorrowBillDtl() {
 		super();
 	}

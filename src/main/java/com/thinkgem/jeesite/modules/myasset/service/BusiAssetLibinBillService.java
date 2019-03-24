@@ -106,14 +106,15 @@ public class BusiAssetLibinBillService extends CrudService<BusiAssetLibinBillDao
 				BeanUtil.copyProperties(am, libinBill);
 				am.setCompanyId(libinBill.getCompany().getId());
 				am.setStockLibId(stocklibId);
-				String assetGlobalId=SeqUtil.getNewId(SeqConstant.ASSET_GLOBAL_ID, 8);
 				String assetRfidTagid=SeqUtil.getNewId16Hex(SeqConstant.ASSET_RFID_TAGID, 24);
 				
-				am.setAssetGlobalId(assetGlobalId);
 				am.setAssetRfidTagid(assetRfidTagid);
 				am.setStatus("1");
 				am.setIsNewRecord(false);
 				am.preInsert();
+				//String assetGlobalId=SeqUtil.getNewId(SeqConstant.ASSET_GLOBAL_ID, 8);
+				String assetGlobalId=am.getId();
+				am.setAssetGlobalId(assetGlobalId);
 				am.setTagIssueFlag("0");//标签未发行
 				assetMainDao.insert(am);
 				if(i==0) {

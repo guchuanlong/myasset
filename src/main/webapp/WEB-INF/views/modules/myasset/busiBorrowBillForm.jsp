@@ -10,6 +10,7 @@
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
+					
 					form.submit();
 				},
 				errorContainer: "#messageBox",
@@ -23,64 +24,6 @@
 				}
 			});
 		});
-		function addRow(list, idx, tpl, row){
-			$(list).append(Mustache.render(tpl, {
-				idx: idx, delBtn: true, row: row
-			}));
-			$(list+idx).find("select").each(function(){
-				$(this).val($(this).attr("data-value"));
-			});
-			$(list+idx).find("input[type='checkbox'], input[type='radio']").each(function(){
-				var ss = $(this).attr("data-value").split(',');
-				for (var i=0; i<ss.length; i++){
-					if($(this).val() == ss[i]){
-						$(this).attr("checked","checked");
-					}
-				}
-			});
-		}
-		function delRow(obj, prefix){
-			var id = $(prefix+"_id");
-			var delFlag = $(prefix+"_delFlag");
-			if (id.val() == ""){
-				$(obj).parent().parent().remove();
-			}else if(delFlag.val() == "0"){
-				delFlag.val("1");
-				$(obj).html("&divide;").attr("title", "撤销删除");
-				$(obj).parent().parent().addClass("error");
-			}else if(delFlag.val() == "1"){
-				delFlag.val("0");
-				$(obj).html("&times;").attr("title", "删除");
-				$(obj).parent().parent().removeClass("error");
-			}
-		}
-		
-		
-		function popChooseAssetMain(){
-			var url=_base+'/myasset/chooseBusiAssetMain/list';
-			console.log('url='+url);
-			 $.get(url, function (data) {
-	                //messageController.hideWait();
-	                var options={
-	                		// dialog的类名
-	                		className: "my-modal",
-	                		title : "选择资产",
-	        				message : data,
-	        				callback:function () {
-	        					    //alert("call");
-	        	                    
-	        	                    
-	                        },
-	                        buttons:{
-	                        	ok:{
-	                        		label:'确定'
-	                        	}
-	                        }
-	                };
-	                bootbox.alert(options);
-	                
-	            });
-		}
 		
 	</script>
 	<style>
@@ -139,42 +82,29 @@
 						<thead>
 							<tr>
 								<th class="hide"></th>
-								<th>资产id</th>
-								<th>备注信息</th>
+								<th>资产编码</th>
+							    <th>资产分类</th>
+							    <th>资产名称</th>
+							    <th>归属公司</th>
+							    <th>归属部门</th>
+							    <th>存放地点</th>
+								<th>操作</th>
 								<shiro:hasPermission name="myasset:busiBorrowBill:edit"><th width="10">&nbsp;</th></shiro:hasPermission>
 							</tr>
 						</thead>
-						<tbody id="busiBorrowBillDtlList">
+						<tbody id="hasChooseAssetDtlList">
 						</tbody>
 						<shiro:hasPermission name="myasset:busiBorrowBill:edit"><tfoot>
 							<tr><td colspan="8"><a href="javascript:" onclick="_showAssetList();" class="btn">新增</a></td></tr>
-							<!-- addRow('#busiBorrowBillDtlList', busiBorrowBillDtlRowIdx, busiBorrowBillDtlTpl);busiBorrowBillDtlRowIdx = busiBorrowBillDtlRowIdx + 1; -->
 						</tfoot></shiro:hasPermission>
 					</table>
-					<script type="text/template" id="busiBorrowBillDtlTpl">//<!--
-						<tr id="busiBorrowBillDtlList{{idx}}">
-							<td class="hide">
-								<input id="busiBorrowBillDtlList{{idx}}_id" name="busiBorrowBillDtlList[{{idx}}].id" type="hidden" value="{{row.id}}"/>
-								<input id="busiBorrowBillDtlList{{idx}}_delFlag" name="busiBorrowBillDtlList[{{idx}}].delFlag" type="hidden" value="0"/>
-							</td>
-							<td>
-								<input id="busiBorrowBillDtlList{{idx}}_assetGlobalId" name="busiBorrowBillDtlList[{{idx}}].assetGlobalId" type="text" value="{{row.assetGlobalId}}" maxlength="64" class="input-small "/>
-							</td>
-							<td>
-								<textarea id="busiBorrowBillDtlList{{idx}}_remarks" name="busiBorrowBillDtlList[{{idx}}].remarks" rows="1" maxlength="100" class="input-small ">{{row.remarks}}</textarea>
-							</td>
-							<shiro:hasPermission name="myasset:busiBorrowBill:edit"><td class="text-center" width="10">
-								{{#delBtn}}<span class="close" onclick="delRow(this, '#busiBorrowBillDtlList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
-							</td></shiro:hasPermission>
-						</tr>//-->
-					</script>
 					<script type="text/javascript">
-						var busiBorrowBillDtlRowIdx = 0, busiBorrowBillDtlTpl = $("#busiBorrowBillDtlTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
 						$(document).ready(function() {
 							var data = ${fns:toJson(busiBorrowBill.busiBorrowBillDtlList)};
-							for (var i=0; i<data.length; i++){
-								addRow('#busiBorrowBillDtlList', busiBorrowBillDtlRowIdx, busiBorrowBillDtlTpl, data[i]);
-								busiBorrowBillDtlRowIdx = busiBorrowBillDtlRowIdx + 1;
+							//渲染已选列表
+							if(data!=null&&data!=undefined){
+								_loadChooseAssetFromDb(data);
+								
 							}
 						});
 					</script>
@@ -184,9 +114,9 @@
 			<shiro:hasPermission name="myasset:busiBorrowBill:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
+	<%@include file="/WEB-INF/views/modules/myasset/ejectChooseAssetList.jsp" %>
 	</form:form>
 	
-	<%@include file="/WEB-INF/views/modules/myasset/ejectChooseAssetList.jsp" %>
 	
 </body>
 </html>

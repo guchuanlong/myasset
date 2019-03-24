@@ -18,6 +18,7 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.myasset.entity.BusiAssetMain;
+import com.thinkgem.jeesite.modules.myasset.entity.BusiAssetname;
 import com.thinkgem.jeesite.modules.myasset.service.BusiAssetMainService;
 
 /**
@@ -50,8 +51,27 @@ public class ChooseAssetMainController extends BaseController {
 		if(!StringUtil.isBlank(pageSizeStr)&&StringUtils.isNumeric(pageSizeStr)) {
 			pageSize=Integer.parseInt(pageSizeStr);
 		}
-		BusiAssetMain busiAssetMain=new BusiAssetMain();
-		Page<BusiAssetMain> page = busiAssetMainService.findPage(new Page<BusiAssetMain>(pageNo, pageSize), busiAssetMain);
+		
+		String status=request.getParameter("paramStatus");
+		String assetNameStr=request.getParameter("paramAssetName");
+		String assetGlobalId=request.getParameter("paramAssetGlobalId");
+		
+		
+		
+		BusiAssetMain param=new BusiAssetMain();
+		if(!StringUtil.isBlank(assetGlobalId)) {
+			param.setAssetGlobalId(assetGlobalId);
+		}
+		if(!StringUtil.isBlank(assetNameStr)) {
+			BusiAssetname assetname=new BusiAssetname();
+			assetname.setName(assetNameStr);
+			param.setAssetname(assetname);
+		}
+		if(!StringUtil.isBlank(status)) {
+			param.setStatus(status);
+		}
+		
+		Page<BusiAssetMain> page = busiAssetMainService.findPage(new Page<BusiAssetMain>(pageNo, pageSize), param);
 		
 		return page;
 	}

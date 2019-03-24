@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.myasset.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.alibaba.fastjson.JSONArray;
+import com.myxapp.sdk.util.StringUtil;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
-import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.myasset.entity.BusiBorrowBill;
+import com.thinkgem.jeesite.modules.myasset.entity.BusiBorrowBillDtl;
 import com.thinkgem.jeesite.modules.myasset.service.BusiBorrowBillService;
 
 /**
@@ -63,9 +68,14 @@ public class BusiBorrowBillController extends BaseController {
 
 	@RequiresPermissions("myasset:busiBorrowBill:edit")
 	@RequestMapping(value = "save")
-	public String save(BusiBorrowBill busiBorrowBill, Model model, RedirectAttributes redirectAttributes) {
+	public String save(BusiBorrowBill busiBorrowBill, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 		if (!beanValidator(model, busiBorrowBill)){
 			return form(busiBorrowBill, model);
+		}
+		String paramHasChooseAsset=request.getParameter("paramHasChooseAsset");
+		if(!StringUtil.isBlank(paramHasChooseAsset)) {
+			List<BusiBorrowBillDtl> list = JSONArray.parseArray(paramHasChooseAsset, BusiBorrowBillDtl.class);
+			busiBorrowBill.setBusiBorrowBillDtlList(list);
 		}
 		busiBorrowBillService.save(busiBorrowBill);
 		addMessage(redirectAttributes, "保存资产领用成功");

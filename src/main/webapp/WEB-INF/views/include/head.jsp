@@ -18,6 +18,7 @@
 <script src="${ctxStatic}/common/mustache.min.js" type="text/javascript"></script>
 <link href="${ctxStatic}/common/jeesite.css" type="text/css" rel="stylesheet" />
 <script src="${ctxStatic}/common/jeesite.js" type="text/javascript"></script>
+<script src="${ctxStatic}/common/StringUtil.js" type="text/javascript"></script>
 <script src="${ctxStatic}/jsviews/jsrender.js" type="text/javascript"></script>
 <script src="${ctxStatic}/jsviews/jsviews.js" type="text/javascript"></script>
 <script src="${ctxStatic}/bootbox/bootbox.js" type="text/javascript"></script>

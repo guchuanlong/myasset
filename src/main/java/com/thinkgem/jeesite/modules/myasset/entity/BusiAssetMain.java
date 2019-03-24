@@ -3,13 +3,13 @@
  */
 package com.thinkgem.jeesite.modules.myasset.entity;
 
-import org.hibernate.validator.constraints.Length;
-import com.thinkgem.jeesite.modules.sys.entity.Office;
-import com.thinkgem.jeesite.modules.myasset.entity.BusiCategory;
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
 
 /**
  * 资产主表Entity
@@ -28,10 +28,13 @@ public class BusiAssetMain extends DataEntity<BusiAssetMain> {
 	private String assetBarCode;		// 资产条形码
 	private String assetQrCode;		// 资产二维码
 	private String companyId;		// 归属公司
+	private Office company;		// 归属公司
 	private Office office;		// 归属部门
 	private String placeId;		// 存放地点
+	private BusiPlace place;		// 存放地点
 	private BusiCategory category;		// 资产分类
 	private String assetnameId;		// 资产名称
+	private BusiAssetname assetname;		// 资产名称
 	private String produceFactory;		// 生产厂家
 	private String modelFormat;		// 资产型号
 	private String deviceNo;		// 设备编号
@@ -48,6 +51,33 @@ public class BusiAssetMain extends DataEntity<BusiAssetMain> {
 
 	public BusiAssetMain(String id){
 		super(id);
+	}
+
+	
+	
+	
+	public Office getCompany() {
+		return company;
+	}
+
+	public void setCompany(Office company) {
+		this.company = company;
+	}
+
+	public BusiPlace getPlace() {
+		return place;
+	}
+
+	public void setPlace(BusiPlace place) {
+		this.place = place;
+	}
+
+	public BusiAssetname getAssetname() {
+		return assetname;
+	}
+
+	public void setAssetname(BusiAssetname assetname) {
+		this.assetname = assetname;
 	}
 
 	@Length(min=0, max=64, message="库存标识长度必须介于 0 和 64 之间")

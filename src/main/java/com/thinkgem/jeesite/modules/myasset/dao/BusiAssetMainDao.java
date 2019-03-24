@@ -15,4 +15,11 @@ import com.thinkgem.jeesite.modules.myasset.entity.BusiAssetMain;
 @MyBatisDao
 public interface BusiAssetMainDao extends CrudDao<BusiAssetMain> {
 	
+	/**
+	 * 更新数据
+	 * @param entity
+	 * @return
+	 */
+	public int updateStatusById(BusiAssetMain entity);
+	
 }

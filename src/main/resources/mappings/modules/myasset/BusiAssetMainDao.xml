@@ -13,10 +13,16 @@
 		a.asset_bar_code AS "assetBarCode",
 		a.asset_qr_code AS "assetQrCode",
 		a.company_id AS "companyId",
+		company.id AS "company.id",
+		company.name AS "company.name",
 		a.office_id AS "office.id",
 		a.place_id AS "placeId",
+		place.id AS "place.id",
+		place.name AS "place.name",
 		a.category_id AS "category.id",
 		a.assetname_id AS "assetnameId",
+		assetname.id AS "assetname.id",
+		assetname.name AS "assetname.name",
 		a.produce_factory AS "produceFactory",
 		a.model_format AS "modelFormat",
 		a.device_no AS "deviceNo",
@@ -39,6 +45,9 @@
 	<sql id="busiAssetMainJoins">
 		LEFT JOIN sys_office o11 ON o11.id = a.office_id
 		LEFT JOIN busi_category a13 ON a13.id = a.category_id
+		left join sys_office company ON company.id = a.company_id
+		left join busi_assetname assetname on assetname.id=a.assetname_id
+		left join busi_place place on place.id=a.place_id
 	</sql>
     
 	<select id="get" resultType="BusiAssetMain">
@@ -70,6 +79,9 @@
 			</if>
 			<if test="assetnameId != null and assetnameId != ''">
 				AND a.assetname_id = #{assetnameId}
+			</if>
+			<if test="assetGlobalId != null and assetGlobalId != ''">
+				AND a.asset_global_id = #{assetGlobalId}
 			</if>
 			<if test="status != null and status != ''">
 				AND a.status = #{status}
@@ -200,6 +212,13 @@
 	<update id="delete">
 		UPDATE busi_asset_main SET 
 			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	<update id="updateStatusById">
+		UPDATE busi_asset_main SET 	
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
 		WHERE id = #{id}
 	</update>
 	

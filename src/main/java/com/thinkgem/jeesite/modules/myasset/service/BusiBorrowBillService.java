@@ -14,13 +14,14 @@ import com.myxapp.sdk.sequence.util.SeqUtil;
 import com.myxapp.sdk.util.DateUtil;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
-import com.thinkgem.jeesite.common.utils.StringUtils;
-import com.thinkgem.jeesite.modules.myasset.entity.BusiBorrowBill;
 import com.thinkgem.jeesite.modules.myasset.constant.MyassetConstant;
 import com.thinkgem.jeesite.modules.myasset.constant.SeqConstant;
+import com.thinkgem.jeesite.modules.myasset.dao.BusiAssetMainDao;
 import com.thinkgem.jeesite.modules.myasset.dao.BusiBorrowBillDao;
-import com.thinkgem.jeesite.modules.myasset.entity.BusiBorrowBillDtl;
 import com.thinkgem.jeesite.modules.myasset.dao.BusiBorrowBillDtlDao;
+import com.thinkgem.jeesite.modules.myasset.entity.BusiAssetMain;
+import com.thinkgem.jeesite.modules.myasset.entity.BusiBorrowBill;
+import com.thinkgem.jeesite.modules.myasset.entity.BusiBorrowBillDtl;
 
 /**
  * 资产领用Service
@@ -33,6 +34,8 @@ public class BusiBorrowBillService extends CrudService<BusiBorrowBillDao, BusiBo
 
 	@Autowired
 	private BusiBorrowBillDtlDao busiBorrowBillDtlDao;
+	@Autowired
+	private BusiAssetMainDao busiAssetMainDao;
 	
 	public BusiBorrowBill get(String id) {
 		BusiBorrowBill busiBorrowBill = super.get(id);
@@ -61,27 +64,28 @@ public class BusiBorrowBillService extends CrudService<BusiBorrowBillDao, BusiBo
 		busiBorrowBill.setStatus(MyassetConstant.BorrowBillStatus.ALL_NOT_RETURN);
 		
 		super.save(busiBorrowBill);
+		//删除原有的关联关系
+		BusiBorrowBillDtl deleteByBill=new BusiBorrowBillDtl();
+		deleteByBill.setBorrowBillId(busiBorrowBill);
+		busiBorrowBillDtlDao.delete(deleteByBill);
+		
 		for (BusiBorrowBillDtl busiBorrowBillDtl : busiBorrowBill.getBusiBorrowBillDtlList()){
-			if (busiBorrowBillDtl.getId() == null){
-				continue;
-			}
 			busiBorrowBillDtl.setCompany(busiBorrowBill.getCompany());
 			busiBorrowBillDtl.setOffice(busiBorrowBill.getOffice());
 			busiBorrowBillDtl.setOsPlatformId(busiBorrowBill.getOsPlatformId());
 			busiBorrowBillDtl.setAssetIsReturn(MyassetConstant.AssetIsReturn.NOT_RETURN);
+			busiBorrowBillDtl.setBorrowBillId(busiBorrowBill);
+			busiBorrowBillDtl.preInsert();
+			busiBorrowBillDtlDao.insert(busiBorrowBillDtl);
 			
-			if (BusiBorrowBillDtl.DEL_FLAG_NORMAL.equals(busiBorrowBillDtl.getDelFlag())){
-				if (StringUtils.isBlank(busiBorrowBillDtl.getId())){
-					busiBorrowBillDtl.setBorrowBillId(busiBorrowBill);
-					busiBorrowBillDtl.preInsert();
-					busiBorrowBillDtlDao.insert(busiBorrowBillDtl);
-				}else{
-					busiBorrowBillDtl.preUpdate();
-					busiBorrowBillDtlDao.update(busiBorrowBillDtl);
-				}
-			}else{
-				busiBorrowBillDtlDao.delete(busiBorrowBillDtl);
-			}
+			//资产状态改为使用中
+			BusiAssetMain am=new BusiAssetMain();
+			am.setId(busiBorrowBillDtl.getAssetGlobalId());
+			am.setStatus(MyassetConstant.AssetStatus.USING);
+			am.preUpdate();
+			busiAssetMainDao.updateStatusById(am);
+			
+			
 		}
 	}
 	
