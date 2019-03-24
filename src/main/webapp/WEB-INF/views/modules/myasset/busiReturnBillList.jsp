@@ -75,7 +75,7 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="busiReturnBill">
 			<tr>
-				<td><a href="${ctx}/myasset/busiReturnBill/form?id=${busiReturnBill.id}">
+				<td><a href="${ctx}/myasset/busiReturnBill/detail?id=${busiReturnBill.id}">
 					${busiReturnBill.returnBillNo}
 				</a></td>
 				<td>
@@ -100,8 +100,8 @@
 					${busiReturnBill.remarks}
 				</td>
 				<shiro:hasPermission name="myasset:busiReturnBill:edit"><td>
-    				<%-- <a href="${ctx}/myasset/busiReturnBill/form?id=${busiReturnBill.id}">修改</a> --%>
-					<a href="${ctx}/myasset/busiReturnBill/delete?id=${busiReturnBill.id}" onclick="return confirmx('确认要删除该资产归还吗？', this.href)">删除</a>
+    			    <a href="${ctx}/myasset/busiReturnBill/detail?id=${busiReturnBill.id}">详情</a> 
+					<%-- <a href="${ctx}/myasset/busiReturnBill/delete?id=${busiReturnBill.id}" onclick="return confirmx('确认要删除该资产归还吗？', this.href)">删除</a> --%>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

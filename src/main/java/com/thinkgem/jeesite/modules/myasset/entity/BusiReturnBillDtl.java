@@ -17,6 +17,7 @@ public class BusiReturnBillDtl extends DataEntity<BusiReturnBillDtl> {
 	
 	private static final long serialVersionUID = 1L;
 	private String borrowBillId;		// 借用单id
+	private String borrowBillNo;		// 借用单id
 	private String borrowBillDtlId;		// 借用单id
 	private BusiReturnBill returnBillId;		// 归还单id 父类
 	private Office company;		// 归属公司
@@ -30,6 +31,14 @@ public class BusiReturnBillDtl extends DataEntity<BusiReturnBillDtl> {
 	private BusiAssetname assetname;		// 资产名称
 	
 	
+	public String getBorrowBillNo() {
+		return borrowBillNo;
+	}
+
+	public void setBorrowBillNo(String borrowBillNo) {
+		this.borrowBillNo = borrowBillNo;
+	}
+
 	public String getBorrowBillDtlId() {
 		return borrowBillDtlId;
 	}

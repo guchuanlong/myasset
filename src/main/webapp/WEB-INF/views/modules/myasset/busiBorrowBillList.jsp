@@ -59,13 +59,13 @@
 				<th>领用人</th>
 				<th>领用单状态</th>
 				<th>更新时间</th>
-				<shiro:hasPermission name="myasset:busiBorrowBill:edit"><th>操作</th></shiro:hasPermission>
+				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="busiBorrowBill">
 			<tr>
-				<td><a href="${ctx}/myasset/busiBorrowBill/form?id=${busiBorrowBill.id}">
+				<td><a href="${ctx}/myasset/busiBorrowBill/detail?id=${busiBorrowBill.id}">
 					${busiBorrowBill.borrowBillNo}
 				</a></td>
 				<td>
@@ -83,10 +83,9 @@
 				<td>
 					<fmt:formatDate value="${busiBorrowBill.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<shiro:hasPermission name="myasset:busiBorrowBill:edit"><td>
-    				<a href="${ctx}/myasset/busiBorrowBill/form?id=${busiBorrowBill.id}">修改</a>
-					<a href="${ctx}/myasset/busiBorrowBill/delete?id=${busiBorrowBill.id}" onclick="return confirmx('确认要删除该资产领用吗？', this.href)">删除</a>
-				</td></shiro:hasPermission>
+				<td>
+    				<a href="${ctx}/myasset/busiBorrowBill/detail?id=${busiBorrowBill.id}">详情</a>
+				</td>
 			</tr>
 		</c:forEach>
 		</tbody>

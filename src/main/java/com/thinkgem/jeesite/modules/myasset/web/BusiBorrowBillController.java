@@ -65,6 +65,11 @@ public class BusiBorrowBillController extends BaseController {
 		model.addAttribute("busiBorrowBill", busiBorrowBill);
 		return "modules/myasset/busiBorrowBillForm";
 	}
+	@RequestMapping(value = "detail")
+	public String detail(BusiBorrowBill busiBorrowBill, Model model) {
+		model.addAttribute("busiBorrowBill", busiBorrowBill);
+		return "modules/myasset/busiBorrowBillDetail";
+	}
 
 	@RequiresPermissions("myasset:busiBorrowBill:edit")
 	@RequestMapping(value = "save")

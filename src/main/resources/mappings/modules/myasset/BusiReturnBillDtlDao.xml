@@ -6,6 +6,7 @@
 		a.id AS "id",
 		a.borrow_bill_id AS "borrowBillId",
 		a.borrow_bill_dtl_id AS "borrowBillDtlId",
+		a.borrow_bill_no AS "borrowBillNo",
 		a.return_bill_id AS "returnBillId.id",
 		a.company_id AS "company.id",
 		a.office_id AS "office.id",
@@ -88,6 +89,7 @@
 		INSERT INTO busi_return_bill_dtl(
 			id,
 			borrow_bill_id,
+			borrow_bill_no,
 			borrow_bill_dtl_id,
 			return_bill_id,
 			company_id,
@@ -103,6 +105,7 @@
 		) VALUES (
 			#{id},
 			#{borrowBillId},
+			#{borrowBillNo},
 			#{borrowBillDtlId},
 			#{returnBillId.id},
 			#{company.id},
@@ -121,6 +124,7 @@
 	<update id="update">
 		UPDATE busi_return_bill_dtl SET 	
 			borrow_bill_id = #{borrowBillId},
+			borrow_bill_no = #{borrowBillNo},
 			borrow_bill_dtl_id = #{borrowBillDtlId},
 			return_bill_id = #{returnBillId.id},
 			company_id = #{company.id},

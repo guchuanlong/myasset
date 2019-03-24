@@ -67,6 +67,12 @@ public class BusiReturnBillController extends BaseController {
 		model.addAttribute("busiReturnBill", busiReturnBill);
 		return "modules/myasset/busiReturnBillForm";
 	}
+	@RequiresPermissions("myasset:busiReturnBill:view")
+	@RequestMapping(value = "detail")
+	public String detail(BusiReturnBill busiReturnBill, Model model) {
+		model.addAttribute("busiReturnBill", busiReturnBill);
+		return "modules/myasset/busiReturnBillDetail";
+	}
 
 	@RequiresPermissions("myasset:busiReturnBill:edit")
 	@RequestMapping(value = "save")
