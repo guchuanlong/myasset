@@ -153,6 +153,9 @@ public class OfficeController extends BaseController {
 	public List<Map<String, Object>> treeData(@RequestParam(required=false) String extId, @RequestParam(required=false) String type,
 			@RequestParam(required=false) Long grade, @RequestParam(required=false) Boolean isAll, HttpServletResponse response) {
 		List<Map<String, Object>> mapList = Lists.newArrayList();
+		if(type!=null&&"1".equals(type)) {
+			isAll=true;
+		}
 		List<Office> list = officeService.findList(isAll);
 		for (int i=0; i<list.size(); i++){
 			Office e = list.get(i);

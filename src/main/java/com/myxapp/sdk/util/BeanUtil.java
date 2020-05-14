@@ -1,12 +1,13 @@
 package com.myxapp.sdk.util;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -118,21 +119,21 @@ public final class BeanUtil {
 	 * @author choaryzhang
 	 * @throws SystemException
 	 */
-	public static void copyProperties(Object destSVO, Object orignSVO) throws SystemException {
+	public static void copyProperties(Object destSVO, Object orignSVO, String... ignoreProperties)
+			throws SystemException {
 		/* 1.源对象与目标对象都不能为空 */
 		if (destSVO == null || orignSVO == null) {
 			throw new SystemException("拷贝VO属性值出错:源对象为空或目标对象为空");
 		}
 		/* 2.深度拷贝 */
 		try {
-			PropertyUtils.copyProperties(destSVO, orignSVO);
-		} catch (IllegalAccessException e) {
+            List<String> ignProperties = new ArrayList<>();
+            ignProperties.addAll(Arrays.asList(ignoreProperties));
+            ignProperties.add("objectType");
+            BeanUtils.copyProperties(orignSVO, destSVO, ignProperties.toArray(new String[ignProperties.size()]));
+		} catch (Exception e ) {
 			throw new SystemException(e);
-		} catch (NoSuchMethodException e) {
-			throw new SystemException(e);
-		} catch (InvocationTargetException e) {
-			throw new SystemException(e);
-		}
+		} 
 	}
 
 	public static void copyPropertiesIgnoreNull(Object destSVO, Object orignSVO) throws SystemException {
@@ -143,12 +144,14 @@ public final class BeanUtil {
 
 		/* 2.深度拷贝 */
 		try {
-			BeanUtils.copyProperties(orignSVO, destSVO, getNullPropertyNames(orignSVO));
+			List<String> ignoreProperties = new ArrayList<>();
+			ignoreProperties.addAll(Arrays.asList(getNullPropertyNames(orignSVO)));
+			ignoreProperties.add("objectType");
+			BeanUtils.copyProperties(orignSVO, destSVO, ignoreProperties.toArray(new String[ignoreProperties.size()]));
 		} catch (Exception e) {
 			throw new SystemException(e);
 		}
 	}
-
 
 	public static boolean hasMethod(Object obj, String methodName) {
 		if (!StringUtil.isBlank(methodName)) {
@@ -162,14 +165,15 @@ public final class BeanUtil {
 		return false;
 	}
 
-	public static String[] getNullPropertyNames (Object source) {
+	public static String[] getNullPropertyNames(Object source) {
 		final BeanWrapper src = new BeanWrapperImpl(source);
 		java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
 
 		Set<String> emptyNames = new HashSet<String>();
-		for(java.beans.PropertyDescriptor pd : pds) {
+		for (java.beans.PropertyDescriptor pd : pds) {
 			Object srcValue = src.getPropertyValue(pd.getName());
-			if (srcValue == null) emptyNames.add(pd.getName());
+			if (srcValue == null)
+				emptyNames.add(pd.getName());
 		}
 		String[] result = new String[emptyNames.size()];
 		return emptyNames.toArray(result);

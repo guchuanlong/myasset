@@ -2,7 +2,7 @@ package com.thinkgem.jeesite.modules.myasset.constant;
 
 public class MyassetConstant {
 	private MyassetConstant(){}
-	
+	public static final int ASSET_BAR_CODE_LENGTH=22;
 	public static final class OsPlatFormId {
 		private OsPlatFormId() {}
 		
@@ -41,5 +41,46 @@ public class MyassetConstant {
 		
 	}
 	
+	public enum AssetBigClass{
+		
+		T01_DIAN_NENG_BIAO("01","电能表"),
+		T02_HU_GAN_QI("02","互感器"),
+		T05_JI_LIANG_XIANG("05","计量箱（屏、柜）"),
+		T09_DIAN_NENG_COLLECT_TERM("09","电能信息采集终端"),
+		T10_JI_LIANG_STANDARD("10","计量标准"),
+		T13_TEST_DEVICE("13","测试装置"),
+		T14_OTHER_YIQI_YIBIAO("14","其他仪器仪表"),
+		T19_ZHOU_ZHUAN_XIANG("19","周转箱（托盘）"),
+		T20_HANDLE_PDA("20","现场手持终端"),
+		T50_HUI_LU_PATROL("50","回路状态巡检仪"),
+		T51_REVERSE_STOLE_DEVICE("51","反窃电装置"),
+		T52_PIPELINE_DEVICE("52","流水线设备"),
+		T53_STOCK_DEVICE("53","仓储设备"),
+		T54_COMM_MODULE("54","通信模块");
+		
+		private String value;
+		private String desc;
+		public String getValue() {
+			return value;
+		}
+		public String getDesc() {
+			return desc;
+		}
+		private AssetBigClass(String value, String desc) {
+			this.value = value;
+			this.desc = desc;
+		}
+		public static AssetBigClass getAssetBigClass(String value) {
+	    	for (AssetBigClass e : AssetBigClass.values()) {
+	            if(e.getValue().equalsIgnoreCase(value)) {
+	            	return e;
+	            }
+	        }
+	    	return null;
+	    }
+
+		
+		
+	}
 	
 }
