@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.PandianPowerunitDao">
+    
+	<sql id="pandianPowerunitColumns">
+		a.id AS "id",
+		a.city_code AS "cityCode",
+		a.city_name AS "cityName",
+		a.powerunit_code AS "powerunitCode",
+		a.powerunit_name AS "powerunitName",
+		a.batch_uuid AS "batchUuid",
+		a.powerunit_pandian_flag AS "powerunitPandianFlag",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="pandianPowerunitJoins">
+	</sql>
+    
+	<select id="get" resultType="PandianPowerunit">
+		SELECT 
+			<include refid="pandianPowerunitColumns"/>
+		FROM pandian_powerunit a
+		<include refid="pandianPowerunitJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PandianPowerunit">
+		SELECT 
+			<include refid="pandianPowerunitColumns"/>
+		FROM pandian_powerunit a
+		<include refid="pandianPowerunitJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="cityName != null and cityName != ''">
+				AND a.city_name = #{cityName}
+			</if>
+			<if test="powerunitCode != null and powerunitCode != ''">
+				AND a.powerunit_code = #{powerunitCode}
+			</if>
+			<if test="powerunitName != null and powerunitName != ''">
+				AND a.powerunit_name = #{powerunitName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PandianPowerunit">
+		SELECT 
+			<include refid="pandianPowerunitColumns"/>
+		FROM pandian_powerunit a
+		<include refid="pandianPowerunitJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO pandian_powerunit(
+			id,
+			city_code,
+			city_name,
+			powerunit_code,
+			powerunit_name,
+			batch_uuid,
+			powerunit_pandian_flag,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{cityCode},
+			#{cityName},
+			#{powerunitCode},
+			#{powerunitName},
+			#{batchUuid},
+			#{powerunitPandianFlag},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE pandian_powerunit SET 	
+			city_code = #{cityCode},
+			city_name = #{cityName},
+			powerunit_code = #{powerunitCode},
+			powerunit_name = #{powerunitName},
+			batch_uuid = #{batchUuid},
+			powerunit_pandian_flag = #{powerunitPandianFlag},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE pandian_powerunit SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

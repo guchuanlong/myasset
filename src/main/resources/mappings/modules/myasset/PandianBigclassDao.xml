@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.PandianBigclassDao">
+    
+	<sql id="pandianBigclassColumns">
+		a.id AS "id",
+		a.bigclass_code AS "bigclassCode",
+		a.bigclass_name AS "bigclassName",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="pandianBigclassJoins">
+	</sql>
+    
+	<select id="get" resultType="PandianBigclass">
+		SELECT 
+			<include refid="pandianBigclassColumns"/>
+		FROM pandian_bigclass a
+		<include refid="pandianBigclassJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PandianBigclass">
+		SELECT 
+			<include refid="pandianBigclassColumns"/>
+		FROM pandian_bigclass a
+		<include refid="pandianBigclassJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="bigclassCode != null and bigclassCode != ''">
+				AND a.bigclass_code = #{bigclassCode}
+			</if>
+			<if test="bigclassName != null and bigclassName != ''">
+				AND a.bigclass_name = #{bigclassName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PandianBigclass">
+		SELECT 
+			<include refid="pandianBigclassColumns"/>
+		FROM pandian_bigclass a
+		<include refid="pandianBigclassJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO pandian_bigclass(
+			id,
+			bigclass_code,
+			bigclass_name,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{bigclassCode},
+			#{bigclassName},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE pandian_bigclass SET 	
+			bigclass_code = #{bigclassCode},
+			bigclass_name = #{bigclassName},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE pandian_bigclass SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

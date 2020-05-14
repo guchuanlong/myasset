@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.PandianBaseHisDao">
+    
+	<sql id="pandianBaseHisColumns">
+		a.id AS "id",
+		a.city_code AS "cityCode",
+		a.city_name AS "cityName",
+		a.company_id AS "company.id",
+		a.company_name AS "companyName",
+		a.office_id AS "office.id",
+		a.power_supply_unit AS "powerSupplyUnit",
+		a.connect_method AS "connectMethod",
+		a.big_class_code AS "bigClassCode",
+		a.big_class_name AS "bigClassName",
+		a.small_class_code AS "smallClassCode",
+		a.small_class_name AS "smallClassName",
+		a.asset_barcode AS "assetBarcode",
+		a.asset_rfid_epc AS "assetRfidEpc",
+		a.pandian_status_id AS "pandianStatusId",
+		a.pandian_status_name AS "pandianStatusName",
+		a.batch_uuid AS "batchUuid",
+		a.base_date AS "baseDate",
+		a.result_date AS "resultDate",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.history_time AS "historyTime",
+		a.history_remark AS "historyRemark",
+		a.history_login_name AS "historyLoginName",
+		a.history_user_id AS "historyUserId",
+		company4.name AS "company.name",
+		o6.name AS "office.name"
+	</sql>
+	
+	<sql id="pandianBaseHisJoins">
+		LEFT JOIN sys_office company4 ON company4.id = a.company_id
+		LEFT JOIN sys_office o6 ON o6.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="PandianBaseHis">
+		SELECT 
+			<include refid="pandianBaseHisColumns"/>
+		FROM pandian_base_his a
+		<include refid="pandianBaseHisJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PandianBaseHis">
+		SELECT 
+			<include refid="pandianBaseHisColumns"/>
+		FROM pandian_base_his a
+		<include refid="pandianBaseHisJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="cityName != null and cityName != ''">
+				AND a.city_name = #{cityName}
+			</if>
+			<if test="company != null and company.id != null and company.id != ''">
+				AND a.company_id = #{company.id}
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
+			</if>
+			<if test="bigClassCode != null and bigClassCode != ''">
+				AND a.big_class_code = #{bigClassCode}
+			</if>
+			<if test="bigClassName != null and bigClassName != ''">
+				AND a.big_class_name = #{bigClassName}
+			</if>
+			<if test="batchUuid != null and batchUuid != ''">
+				AND a.batch_uuid = #{batchUuid}
+			</if>
+			<!-- 数据范围过滤 -->
+			${sqlMap.dsf}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PandianBaseHis">
+		SELECT 
+			<include refid="pandianBaseHisColumns"/>
+		FROM pandian_base_his a
+		<include refid="pandianBaseHisJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO pandian_base_his(
+			id,
+			city_code,
+			city_name,
+			company_id,
+			company_name,
+			office_id,
+			power_supply_unit,
+			connect_method,
+			big_class_code,
+			big_class_name,
+			small_class_code,
+			small_class_name,
+			asset_barcode,
+			asset_rfid_epc,
+			pandian_status_id,
+			pandian_status_name,
+			batch_uuid,
+			base_date,
+			result_date,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			history_time,
+			history_remark,
+			history_login_name,
+			history_user_id
+		) VALUES (
+			#{id},
+			#{cityCode},
+			#{cityName},
+			#{company.id},
+			#{companyName},
+			#{office.id},
+			#{powerSupplyUnit},
+			#{connectMethod},
+			#{bigClassCode},
+			#{bigClassName},
+			#{smallClassCode},
+			#{smallClassName},
+			#{assetBarcode},
+			#{assetRfidEpc},
+			#{pandianStatusId},
+			#{pandianStatusName},
+			#{batchUuid},
+			#{baseDate},
+			#{resultDate},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{historyTime},
+			#{historyRemark},
+			#{historyLoginName},
+			#{historyUserId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE pandian_base_his SET 	
+			city_code = #{cityCode},
+			city_name = #{cityName},
+			company_id = #{company.id},
+			company_name = #{companyName},
+			office_id = #{office.id},
+			power_supply_unit = #{powerSupplyUnit},
+			connect_method = #{connectMethod},
+			big_class_code = #{bigClassCode},
+			big_class_name = #{bigClassName},
+			small_class_code = #{smallClassCode},
+			small_class_name = #{smallClassName},
+			asset_barcode = #{assetBarcode},
+			asset_rfid_epc = #{assetRfidEpc},
+			pandian_status_id = #{pandianStatusId},
+			pandian_status_name = #{pandianStatusName},
+			batch_uuid = #{batchUuid},
+			base_date = #{baseDate},
+			result_date = #{resultDate},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			history_time = #{historyTime},
+			history_remark = #{historyRemark},
+			history_login_name = #{historyLoginName},
+			history_user_id = #{historyUserId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE pandian_base_his SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

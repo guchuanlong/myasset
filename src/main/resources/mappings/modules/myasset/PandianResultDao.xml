@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.PandianResultDao">
+    
+	<sql id="pandianResultColumns">
+		a.id AS "id",
+		a.city_code AS "cityCode",
+		a.city_name AS "cityName",
+		a.company_name AS "companyName",
+		a.company_id AS "company.id",
+		a.power_supply_unit AS "powerSupplyUnit",
+		a.connect_method AS "connectMethod",
+		a.office_id AS "office.id",
+		a.big_class_code AS "bigClassCode",
+		a.big_class_name AS "bigClassName",
+		a.small_class_code AS "smallClassCode",
+		a.small_class_name AS "smallClassName",
+		a.asset_barcode AS "assetBarcode",
+		a.asset_rfid_epc AS "assetRfidEpc",
+		a.pandian_status_id AS "pandianStatusId",
+		a.pandian_status_name AS "pandianStatusName",
+		a.batch_uuid AS "batchUuid",
+		a.base_date AS "baseDate",
+		a.result_date AS "resultDate",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		company5.name AS "company.name",
+		o8.name AS "office.name"
+	</sql>
+	
+	<sql id="pandianResultJoins">
+		LEFT JOIN sys_office company5 ON company5.id = a.company_id
+		LEFT JOIN sys_office o8 ON o8.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="PandianResult">
+		SELECT 
+			<include refid="pandianResultColumns"/>
+		FROM pandian_result a
+		<include refid="pandianResultJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PandianResult">
+		SELECT 
+			<include refid="pandianResultColumns"/>
+		FROM pandian_result a
+		<include refid="pandianResultJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="cityName != null and cityName != ''">
+				AND a.city_name = #{cityName}
+			</if>
+			<if test="company != null and company.id != null and company.id != ''">
+				AND a.company_id = #{company.id}
+			</if>
+			<if test="connectMethod != null and connectMethod != ''">
+				AND a.connect_method = #{connectMethod}
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
+			</if>
+			<if test="pandianStatusId != null and pandianStatusId != ''">
+				AND a.pandian_status_id = #{pandianStatusId}
+			</if>
+			<if test="baseDate != null and baseDate != ''">
+				AND a.base_date = #{baseDate}
+			</if>
+			<if test="resultDate != null and resultDate != ''">
+				AND a.result_date = #{resultDate}
+			</if>
+			<!-- 数据范围过滤 -->
+			${sqlMap.dsf}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PandianResult">
+		SELECT 
+			<include refid="pandianResultColumns"/>
+		FROM pandian_result a
+		<include refid="pandianResultJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO pandian_result(
+			id,
+			city_code,
+			city_name,
+			company_name,
+			company_id,
+			power_supply_unit,
+			connect_method,
+			office_id,
+			big_class_code,
+			big_class_name,
+			small_class_code,
+			small_class_name,
+			asset_barcode,
+			asset_rfid_epc,
+			pandian_status_id,
+			pandian_status_name,
+			batch_uuid,
+			base_date,
+			result_date,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{cityCode},
+			#{cityName},
+			#{companyName},
+			#{company.id},
+			#{powerSupplyUnit},
+			#{connectMethod},
+			#{office.id},
+			#{bigClassCode},
+			#{bigClassName},
+			#{smallClassCode},
+			#{smallClassName},
+			#{assetBarcode},
+			#{assetRfidEpc},
+			#{pandianStatusId},
+			#{pandianStatusName},
+			#{batchUuid},
+			#{baseDate},
+			#{resultDate},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE pandian_result SET 	
+			city_code = #{cityCode},
+			city_name = #{cityName},
+			company_name = #{companyName},
+			company_id = #{company.id},
+			power_supply_unit = #{powerSupplyUnit},
+			connect_method = #{connectMethod},
+			office_id = #{office.id},
+			big_class_code = #{bigClassCode},
+			big_class_name = #{bigClassName},
+			small_class_code = #{smallClassCode},
+			small_class_name = #{smallClassName},
+			asset_barcode = #{assetBarcode},
+			asset_rfid_epc = #{assetRfidEpc},
+			pandian_status_id = #{pandianStatusId},
+			pandian_status_name = #{pandianStatusName},
+			batch_uuid = #{batchUuid},
+			base_date = #{baseDate},
+			result_date = #{resultDate},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE pandian_result SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	<update id="deleteByPowerUnit">
+		delete from pandian_result  
+		WHERE office_id = #{office.id}
+	</update>
+	
+	<update id="insert2hisByPowerUnit">
+		insert into pandian_result_his(
+			id,
+			city_code,
+			city_name,
+			company_name,
+			company_id,
+			power_supply_unit,
+			connect_method,
+			office_id,
+			big_class_code,
+			big_class_name,
+			small_class_code,
+			small_class_name,
+			asset_barcode,
+			asset_rfid_epc,
+			pandian_status_id,
+			pandian_status_name,
+			batch_uuid,
+			base_date,
+			result_date,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			history_time,
+			history_remark,
+			history_login_name,
+			history_user_id
+		) 
+		select id,
+			city_code,
+			city_name,
+			company_name,
+			company_id,
+			power_supply_unit,
+			connect_method,
+			office_id,
+			big_class_code,
+			big_class_name,
+			small_class_code,
+			small_class_name,
+			asset_barcode,
+			asset_rfid_epc,
+			pandian_status_id,
+			pandian_status_name,
+			batch_uuid,
+			base_date,
+			result_date,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			CURRENT_TIMESTAMP,
+			'',
+			#{id},
+			#{name}
+		FROM pandian_result a
+		where a.office_id = #{office.id}
+	</update>
+	
+	<select id="countAppResultByPowerUnit">
+		select count(1) from
+		FROM pandian_result a
+		where a.office_id = #{office.id}
+	</select>
+	<update id="insertAppResultByPowerUnit">
+		insert into pandian_result(
+			id,
+			city_code,
+			city_name,
+			company_name,
+			company_id,
+			power_supply_unit,
+			connect_method,
+			office_id,
+			big_class_code,
+			big_class_name,
+			small_class_code,
+			small_class_name,
+			asset_barcode,
+			asset_rfid_epc,
+			pandian_status_id,
+			pandian_status_name,
+			batch_uuid,
+			base_date,
+			result_date,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) 
+		select id,
+			city_code,
+			city_name,
+			company_name,
+			company_id,
+			power_supply_unit,
+			connect_method,
+			office_id,
+			big_class_code,
+			big_class_name,
+			small_class_code,
+			small_class_name,
+			asset_barcode,
+			asset_rfid_epc,
+			'0',
+			'未盘',
+			batch_uuid,
+			base_date,
+			result_date,
+			create_by,
+			create_date,
+			#{id},
+			CURRENT_TIMESTAMP,
+			remarks,
+			del_flag
+		FROM pandian_base a
+		where a.office_id = #{office.id}
+	</update>
+	<update id="deleteAppResultByPowerUnit">
+		delete from pandian_result 
+		where office_id = #{office.id}
+	</update>
+	<update id="batchUpdateAppResult" parameterType="java.util.List">
+		update pandian_result
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="PANDIAN_STATUS_ID = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.pandianStatusId!=null">
+                        when ID=#{item.id} then #{item.pandianStatusId}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="PANDIAN_STATUS_NAME = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.pandianStatusName!=null">
+                        when ID=#{item.id} then #{item.pandianStatusName}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="RESULT_DATE = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.resultDate!=null">
+                        when ID=#{item.id} then #{item.resultDate}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        <where>
+            <foreach collection="list" separator="or" item="item">
+                ID = #{item.id}
+            </foreach>
+        </where>
+	</update>
+</mapper>

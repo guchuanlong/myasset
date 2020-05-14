@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.PandianSmallclassDao">
+    
+	<sql id="pandianSmallclassColumns">
+		a.id AS "id",
+		a.smallclass_code AS "smallclassCode",
+		a.smallclass_name AS "smallclassName",
+		a.bigclass_code AS "bigclassCode",
+		a.bigclass_name AS "bigclassName",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="pandianSmallclassJoins">
+	</sql>
+    
+	<select id="get" resultType="PandianSmallclass">
+		SELECT 
+			<include refid="pandianSmallclassColumns"/>
+		FROM pandian_smallclass a
+		<include refid="pandianSmallclassJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PandianSmallclass">
+		SELECT 
+			<include refid="pandianSmallclassColumns"/>
+		FROM pandian_smallclass a
+		<include refid="pandianSmallclassJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="smallclassCode != null and smallclassCode != ''">
+				AND a.smallclass_code = #{smallclassCode}
+			</if>
+			<if test="smallclassName != null and smallclassName != ''">
+				AND a.smallclass_name = #{smallclassName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PandianSmallclass">
+		SELECT 
+			<include refid="pandianSmallclassColumns"/>
+		FROM pandian_smallclass a
+		<include refid="pandianSmallclassJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO pandian_smallclass(
+			id,
+			smallclass_code,
+			smallclass_name,
+			bigclass_code,
+			bigclass_name,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{smallclassCode},
+			#{smallclassName},
+			#{bigclassCode},
+			#{bigclassName},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE pandian_smallclass SET 	
+			smallclass_code = #{smallclassCode},
+			smallclass_name = #{smallclassName},
+			bigclass_code = #{bigclassCode},
+			bigclass_name = #{bigclassName},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE pandian_smallclass SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
