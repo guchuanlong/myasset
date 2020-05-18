@@ -144,14 +144,14 @@ public class PandianBaseController extends BaseController {
 							throw new BusinessException("999999","找不到供电单位名称");
 						}
 						
-						//校验公司id和供电单位id是否匹配
-						if(!pandianBase.getCompany().getId().equalsIgnoreCase(user.getCompany().getId())) {
-							throw new BusinessException("999999","公司名称和当前用户归属的公司不匹配");
-						}
-						//校验公司id和供电单位id是否匹配
-						if(!pandianBase.getOffice().getId().equalsIgnoreCase(user.getOffice().getId())) {
-							throw new BusinessException("999999","供电单位名称和当前用户归属的供电单位不匹配");
-						}
+//						//校验公司id和供电单位id是否匹配
+//						if(!pandianBase.getCompany().getId().equalsIgnoreCase(user.getCompany().getId())) {
+//							throw new BusinessException("999999","公司名称和当前用户归属的公司不匹配");
+//						}
+//						//校验公司id和供电单位id是否匹配
+//						if(!pandianBase.getOffice().getId().equalsIgnoreCase(user.getOffice().getId())) {
+//							throw new BusinessException("999999","供电单位名称和当前用户归属的供电单位不匹配");
+//						}
 							
 							
 						BeanValidators.validateWithException(validator, pandianBase);
@@ -203,8 +203,8 @@ public class PandianBaseController extends BaseController {
     		//list.add(UserUtils.getUser());
     		PandianBase demo=new PandianBase();
     		demo.setCityName("抚州");
-    		demo.setCompanyName("抚州");
-    		demo.setPowerSupplyUnit("抚州供电分公司供电区域");
+    		demo.setCompanyName("山东省总公司");
+    		demo.setPowerSupplyUnit("济南市分公司");
     		demo.setConnectMethod("三相三线");
     		demo.setAssetBarcode("20300130002444425");
     		Office company=new Office();
