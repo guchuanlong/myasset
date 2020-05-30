@@ -31,7 +31,7 @@ import com.thinkgem.jeesite.modules.myasset.service.BusiPlaceService;
 /**
  * 资产入库Controller
  * @author gucl
- * @version 2019-01-03
+ * @version 2020-05-30
  */
 @Controller
 @RequestMapping(value = "${adminPath}/myasset/busiAssetLibinBill")

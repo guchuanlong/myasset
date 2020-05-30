@@ -28,7 +28,7 @@ import com.thinkgem.jeesite.modules.myasset.entity.BusiStockLib;
 /**
  * 资产入库Service
  * @author gucl
- * @version 2019-01-03
+ * @version 2020-05-30
  */
 @Service
 @Transactional(readOnly = true)

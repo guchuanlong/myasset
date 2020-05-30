@@ -46,6 +46,9 @@
 			<li><label>资产名称：</label>
 				<form:input path="assetnameId" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
+			<li><label>责任人：</label>
+				<form:input path="respPerson" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -62,8 +65,8 @@
 				<th>存放地点</th>
 				<th>资产分类</th>
 				<th>资产名称</th>
-				<th>入库时间</th>
-				<th>操作人</th>
+				<th>责任人</th>
+				<th>启用日期</th>
 				<th>变更时间</th>
 				<shiro:hasPermission name="myasset:busiAssetLibinBill:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -96,10 +99,10 @@
 					${fns:getAssetname(busiAssetLibinBill.assetnameId)}
 				</td>
 				<td>
-					<fmt:formatDate value="${busiAssetLibinBill.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					${busiAssetLibinBill.respPerson}
 				</td>
 				<td>
-					${busiAssetLibinBill.updateBy.name}
+					<fmt:formatDate value="${busiAssetLibinBill.activeTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					<fmt:formatDate value="${busiAssetLibinBill.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

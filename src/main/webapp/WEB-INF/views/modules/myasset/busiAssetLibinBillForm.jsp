@@ -163,6 +163,64 @@
 				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
 			</div>
 		</div>
+		<div class="control-group">
+			<label class="control-label">ERP资产号：</label>
+			<div class="controls">
+				<form:input path="erpAssetCode" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">物品品类编码：</label>
+			<div class="controls">
+				<form:input path="goodsType" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">责任人：</label>
+			<div class="controls">
+				<form:input path="respPerson" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">标签类别：</label>
+			<div class="controls">
+				<form:input path="tagClass" htmlEscape="false" maxlength="32" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">启用日期：</label>
+			<div class="controls">
+				<input name="activeTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+					value="<fmt:formatDate value="${busiAssetLibinBill.activeTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">报废日期：</label>
+			<div class="controls">
+				<input name="scrapTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+					value="<fmt:formatDate value="${busiAssetLibinBill.scrapTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">采购价格(元)：</label>
+			<div class="controls">
+				<form:input path="purchasePrice" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">报废年限：</label>
+			<div class="controls">
+				<form:input path="scrapYearLimit" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">净残值(元)：</label>
+			<div class="controls">
+				<form:input path="netSalvage" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
 		<div class="form-actions">
 			<shiro:hasPermission name="myasset:busiAssetLibinBill:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

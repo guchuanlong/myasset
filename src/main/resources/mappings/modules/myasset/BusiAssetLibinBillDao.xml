@@ -28,6 +28,15 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
+		a.erp_asset_code AS "erpAssetCode",
+		a.goods_type AS "goodsType",
+		a.resp_person AS "respPerson",
+		a.tag_class AS "tagClass",
+		a.active_time AS "activeTime",
+		a.scrap_time AS "scrapTime",
+		a.purchase_price AS "purchasePrice",
+		a.scrap_year_limit AS "scrapYearLimit",
+		a.net_salvage AS "netSalvage",
 		company7.name AS "company.name",
 		o8.name AS "office.name",
 		a10.name AS "category.name",
@@ -75,6 +84,9 @@
 			</if>
 			<if test="assetnameId != null and assetnameId != ''">
 				AND a.assetname_id = #{assetnameId}
+			</if>
+			<if test="respPerson != null and respPerson != ''">
+				AND a.resp_person = #{respPerson}
 			</if>
 		</where>
 		<choose>
@@ -131,7 +143,16 @@
 			update_by,
 			update_date,
 			remarks,
-			del_flag
+			del_flag,
+			erp_asset_code,
+			goods_type,
+			resp_person,
+			tag_class,
+			active_time,
+			scrap_time,
+			purchase_price,
+			scrap_year_limit,
+			net_salvage
 		) VALUES (
 			#{id},
 			#{libinBillNo},
@@ -157,7 +178,16 @@
 			#{updateBy.id},
 			#{updateDate},
 			#{remarks},
-			#{delFlag}
+			#{delFlag},
+			#{erpAssetCode},
+			#{goodsType},
+			#{respPerson},
+			#{tagClass},
+			#{activeTime},
+			#{scrapTime},
+			#{purchasePrice},
+			#{scrapYearLimit},
+			#{netSalvage}
 		)
 	</insert>
 	
@@ -183,7 +213,16 @@
 			depreciation_period = #{depreciationPeriod},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			remarks = #{remarks}
+			remarks = #{remarks},
+			erp_asset_code = #{erpAssetCode},
+			goods_type = #{goodsType},
+			resp_person = #{respPerson},
+			tag_class = #{tagClass},
+			active_time = #{activeTime},
+			scrap_time = #{scrapTime},
+			purchase_price = #{purchasePrice},
+			scrap_year_limit = #{scrapYearLimit},
+			net_salvage = #{netSalvage}
 		WHERE id = #{id}
 	</update>
 	

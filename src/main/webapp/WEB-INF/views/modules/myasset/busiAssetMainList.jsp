@@ -19,12 +19,15 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/myasset/busiAssetMain/">资产主表列表</a></li>
-		<shiro:hasPermission name="myasset:busiAssetMain:edit"><li style="display:none;"><a href="${ctx}/myasset/busiAssetMain/form">资产主表添加</a></li></shiro:hasPermission>
+		<shiro:hasPermission name="myasset:busiAssetMain:edit"><li><a href="${ctx}/myasset/busiAssetMain/form">资产主表添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="busiAssetMain" action="${ctx}/myasset/busiAssetMain/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>归属公司：</label>
+				<form:input path="companyId" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
 			<li><label>归属部门：</label>
 				<sys:treeselect id="office" name="office.id" value="${busiAssetMain.office.id}" labelName="office.name" labelValue="${busiAssetMain.office.name}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
@@ -38,6 +41,15 @@
 			</li>
 			<li><label>资产名称：</label>
 				<form:input path="assetnameId" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
+			<li><label>ERP资产号：</label>
+				<form:input path="erpAssetCode" htmlEscape="false" maxlength="100" class="input-medium"/>
+			</li>
+			<li><label>物品品类编码：</label>
+				<form:input path="goodsType" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
+			<li><label>责任人：</label>
+				<form:input path="respPerson" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -57,8 +69,11 @@
 				<th>存放地点</th>
 				<th>资产分类</th>
 				<th>资产名称</th>
-				<!-- <th>资产型号</th>
-				<th>出厂日期</th> -->
+				<th>出厂日期</th>
+				<th>ERP资产号</th>
+				<th>物品品类编码</th>
+				<th>责任人</th>
+				<th>启用日期</th>
 				<shiro:hasPermission name="myasset:busiAssetMain:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -96,12 +111,21 @@
 				<td>
 					${fns:getAssetname(busiAssetMain.assetnameId)}
 				</td>
-				<%-- <td>
-					${busiAssetMain.modelFormat}
-				</td>
 				<td>
 					<fmt:formatDate value="${busiAssetMain.produceDate}" pattern="yyyy-MM-dd"/>
-				</td> --%>
+				</td>
+				<td>
+					${busiAssetMain.erpAssetCode}
+				</td>
+				<td>
+					${busiAssetMain.goodsType}
+				</td>
+				<td>
+					${busiAssetMain.respPerson}
+				</td>
+				<td>
+					<fmt:formatDate value="${busiAssetMain.activeTime}" pattern="yyyy-MM-dd"/>
+				</td>
 				<shiro:hasPermission name="myasset:busiAssetMain:edit"><td>
     				<a href="${ctx}/myasset/busiAssetMain/form?id=${busiAssetMain.id}">修改</a>
 					<a href="${ctx}/myasset/busiAssetMain/delete?id=${busiAssetMain.id}" onclick="return confirmx('确认要删除该资产主表吗？', this.href)">删除</a>

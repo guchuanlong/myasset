@@ -38,6 +38,15 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
+		a.erp_asset_code AS "erpAssetCode",
+		a.goods_type AS "goodsType",
+		a.resp_person AS "respPerson",
+		a.tag_class AS "tagClass",
+		a.active_time AS "activeTime",
+		a.scrap_time AS "scrapTime",
+		a.purchase_price AS "purchasePrice",
+		a.scrap_year_limit AS "scrapYearLimit",
+		a.net_salvage AS "netSalvage",
 		o11.name AS "office.name",
 		a13.name AS "category.name"
 	</sql>
@@ -85,6 +94,15 @@
 			</if>
 			<if test="status != null and status != ''">
 				AND a.status = #{status}
+			</if>
+			<if test="erpAssetCode != null and erpAssetCode != ''">
+				AND a.erp_asset_code = #{erpAssetCode}
+			</if>
+			<if test="goodsType != null and goodsType != ''">
+				AND a.goods_type = #{goodsType}
+			</if>
+			<if test="respPerson != null and respPerson != ''">
+				AND a.resp_person = #{respPerson}
 			</if>
 		</where>
 		<choose>
@@ -145,7 +163,16 @@
 			update_by,
 			update_date,
 			remarks,
-			del_flag
+			del_flag,
+			erp_asset_code,
+			goods_type,
+			resp_person,
+			tag_class,
+			active_time,
+			scrap_time,
+			purchase_price,
+			scrap_year_limit,
+			net_salvage
 		) VALUES (
 			#{id},
 			#{stockLibId},
@@ -175,7 +202,16 @@
 			#{updateBy.id},
 			#{updateDate},
 			#{remarks},
-			#{delFlag}
+			#{delFlag},
+			#{erpAssetCode},
+			#{goodsType},
+			#{respPerson},
+			#{tagClass},
+			#{activeTime},
+			#{scrapTime},
+			#{purchasePrice},
+			#{scrapYearLimit},
+			#{netSalvage}
 		)
 	</insert>
 	
@@ -205,7 +241,16 @@
 			tag_issue_flag = #{tagIssueFlag},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			remarks = #{remarks}
+			remarks = #{remarks},
+			erp_asset_code = #{erpAssetCode},
+			goods_type = #{goodsType},
+			resp_person = #{respPerson},
+			tag_class = #{tagClass},
+			active_time = #{activeTime},
+			scrap_time = #{scrapTime},
+			purchase_price = #{purchasePrice},
+			scrap_year_limit = #{scrapYearLimit},
+			net_salvage = #{netSalvage}
 		WHERE id = #{id}
 	</update>
 	

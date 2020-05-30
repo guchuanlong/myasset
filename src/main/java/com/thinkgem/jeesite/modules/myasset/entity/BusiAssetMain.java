@@ -3,18 +3,18 @@
  */
 package com.thinkgem.jeesite.modules.myasset.entity;
 
-import java.util.Date;
-
 import org.hibernate.validator.constraints.Length;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
+import com.thinkgem.jeesite.modules.myasset.entity.BusiCategory;
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
  * 资产主表Entity
  * @author gucl
- * @version 2019-02-09
+ * @version 2020-05-30
  */
 public class BusiAssetMain extends DataEntity<BusiAssetMain> {
 	
@@ -23,7 +23,7 @@ public class BusiAssetMain extends DataEntity<BusiAssetMain> {
 	private String libinBillNo;		// 入库单编号
 	private String status;		// 资产状态
 	private String measureUnitId;		// 计量单位
-	private String assetGlobalId;		// 资产全局唯一标识
+	private String assetGlobalId;		// 资产编码
 	private String assetRfidTagid;		// 资产RFID标识
 	private String assetBarCode;		// 资产条形码
 	private String assetQrCode;		// 资产二维码
@@ -44,6 +44,15 @@ public class BusiAssetMain extends DataEntity<BusiAssetMain> {
 	private String depreciationWayId;		// 折旧方式
 	private String depreciationPeriod;		// 折旧期限
 	private String tagIssueFlag;		// 标签发行标识（0：未发行（打印）， 1：已发行（打印））
+	private String erpAssetCode;		// ERP资产号
+	private String goodsType;		// 物品品类编码
+	private String respPerson;		// 责任人
+	private String tagClass;		// 标签类别
+	private Date activeTime;		// 启用日期
+	private Date scrapTime;		// 报废日期
+	private String purchasePrice;		// 采购价格(元)
+	private String scrapYearLimit;		// 报废年限
+	private String netSalvage;		// 净残值(元)
 	
 	public BusiAssetMain() {
 		super();
@@ -116,7 +125,7 @@ public class BusiAssetMain extends DataEntity<BusiAssetMain> {
 		this.measureUnitId = measureUnitId;
 	}
 	
-	@Length(min=0, max=64, message="资产全局唯一标识长度必须介于 0 和 64 之间")
+	@Length(min=0, max=64, message="资产编码长度必须介于 0 和 64 之间")
 	public String getAssetGlobalId() {
 		return assetGlobalId;
 	}
@@ -273,6 +282,84 @@ public class BusiAssetMain extends DataEntity<BusiAssetMain> {
 
 	public void setTagIssueFlag(String tagIssueFlag) {
 		this.tagIssueFlag = tagIssueFlag;
+	}
+	
+	@Length(min=0, max=100, message="ERP资产号长度必须介于 0 和 100 之间")
+	public String getErpAssetCode() {
+		return erpAssetCode;
+	}
+
+	public void setErpAssetCode(String erpAssetCode) {
+		this.erpAssetCode = erpAssetCode;
+	}
+	
+	@Length(min=0, max=64, message="物品品类编码长度必须介于 0 和 64 之间")
+	public String getGoodsType() {
+		return goodsType;
+	}
+
+	public void setGoodsType(String goodsType) {
+		this.goodsType = goodsType;
+	}
+	
+	@Length(min=0, max=64, message="责任人长度必须介于 0 和 64 之间")
+	public String getRespPerson() {
+		return respPerson;
+	}
+
+	public void setRespPerson(String respPerson) {
+		this.respPerson = respPerson;
+	}
+	
+	@Length(min=0, max=32, message="标签类别长度必须介于 0 和 32 之间")
+	public String getTagClass() {
+		return tagClass;
+	}
+
+	public void setTagClass(String tagClass) {
+		this.tagClass = tagClass;
+	}
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getActiveTime() {
+		return activeTime;
+	}
+
+	public void setActiveTime(Date activeTime) {
+		this.activeTime = activeTime;
+	}
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getScrapTime() {
+		return scrapTime;
+	}
+
+	public void setScrapTime(Date scrapTime) {
+		this.scrapTime = scrapTime;
+	}
+	
+	public String getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(String purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+	
+	public String getScrapYearLimit() {
+		return scrapYearLimit;
+	}
+
+	public void setScrapYearLimit(String scrapYearLimit) {
+		this.scrapYearLimit = scrapYearLimit;
+	}
+	
+	public String getNetSalvage() {
+		return netSalvage;
+	}
+
+	public void setNetSalvage(String netSalvage) {
+		this.netSalvage = netSalvage;
 	}
 	
 }
