@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.BusiScrapBillDtlDao">
+    
+	<sql id="busiScrapBillDtlColumns">
+		a.id AS "id",
+		a.scrap_bill_id AS "scrapBillId.id",
+		a.company_id AS "company.id",
+		a.office_id AS "office.id",
+		a.asset_global_id AS "assetGlobalId",
+		a.asset_is_scrap AS "assetIsScrap",
+		a.os_platform_id AS "osPlatformId",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		company3.name AS "company.name",
+		category.id AS "category.id",
+		category.name AS "category.name",
+		assetname.id AS "assetname.id",
+		assetname.name AS "assetname.name",
+		place.id AS "place.id",
+		place.name AS "place.name",
+		o4.name AS "office.name"
+	</sql>
+	
+	<sql id="busiScrapBillDtlJoins">
+		LEFT JOIN busi_scrap_bill b ON b.id = a.scrap_bill_id
+		LEFT JOIN sys_office company3 ON company3.id = a.company_id
+		LEFT JOIN sys_office o4 ON o4.id = a.office_id
+		left join busi_asset_main m on m.id=a.asset_global_id
+		LEFT JOIN busi_category category ON category.id = m.category_id
+		left join busi_assetname assetname on assetname.id=m.assetname_id
+		left join busi_place place on place.id=m.place_id
+	</sql>
+    
+	<select id="get" resultType="BusiScrapBillDtl">
+		SELECT 
+			<include refid="busiScrapBillDtlColumns"/>
+		FROM busi_scrap_bill_dtl a
+		<include refid="busiScrapBillDtlJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BusiScrapBillDtl">
+		SELECT 
+			<include refid="busiScrapBillDtlColumns"/>
+		FROM busi_scrap_bill_dtl a
+		<include refid="busiScrapBillDtlJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="scrapBillId != null and scrapBillId != '' and scrapBillId.id != null and scrapBillId.id != ''">
+				AND a.scrap_bill_id = #{scrapBillId.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BusiScrapBillDtl">
+		SELECT 
+			<include refid="busiScrapBillDtlColumns"/>
+		FROM busi_scrap_bill_dtl a
+		<include refid="busiScrapBillDtlJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO busi_scrap_bill_dtl(
+			id,
+			scrap_bill_id,
+			company_id,
+			office_id,
+			asset_global_id,
+			asset_is_scrap,
+			os_platform_id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{scrapBillId.id},
+			#{company.id},
+			#{office.id},
+			#{assetGlobalId},
+			#{assetIsScrap},
+			#{osPlatformId},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE busi_scrap_bill_dtl SET 	
+			scrap_bill_id = #{scrapBillId.id},
+			company_id = #{company.id},
+			office_id = #{office.id},
+			asset_global_id = #{assetGlobalId},
+			asset_is_scrap = #{assetIsScrap},
+			os_platform_id = #{osPlatformId},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE busi_scrap_bill_dtl SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE scrap_bill_id = #{scrapBillId.id}
+			</otherwise>
+		</choose>
+	</update>
+	
+</mapper>

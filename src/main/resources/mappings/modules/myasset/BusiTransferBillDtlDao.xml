@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.BusiTransferBillDtlDao">
+    
+	<sql id="busiTransferBillDtlColumns">
+		a.id AS "id",
+		a.transfer_bill_id AS "transferBillId.id",
+		a.company_id AS "company.id",
+		a.office_id AS "office.id",
+		a.asset_global_id AS "assetGlobalId",
+		a.asset_is_transfer AS "assetIsTransfer",
+		a.os_platform_id AS "osPlatformId",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.orig_resp_person AS "origRespPerson",
+		a.orig_place_id AS "origPlaceId",
+		a.recv_resp_person AS "recvRespPerson",
+		a.recv_place_id AS "recvPlaceId",
+		company3.name AS "company.name",
+		category.id AS "category.id",
+		category.name AS "category.name",
+		assetname.id AS "assetname.id",
+		assetname.name AS "assetname.name",
+		place.id AS "place.id",
+		place.name AS "place.name",
+		o4.name AS "office.name"
+	</sql>
+	
+	<sql id="busiTransferBillDtlJoins">
+		LEFT JOIN busi_transfer_bill b ON b.id = a.transfer_bill_id
+		LEFT JOIN sys_office company3 ON company3.id = a.company_id
+		LEFT JOIN sys_office o4 ON o4.id = a.office_id
+		left join busi_asset_main m on m.id=a.asset_global_id
+		LEFT JOIN busi_category category ON category.id = m.category_id
+		left join busi_assetname assetname on assetname.id=m.assetname_id
+		left join busi_place place on place.id=m.place_id
+	</sql>
+    
+	<select id="get" resultType="BusiTransferBillDtl">
+		SELECT 
+			<include refid="busiTransferBillDtlColumns"/>
+		FROM busi_transfer_bill_dtl a
+		<include refid="busiTransferBillDtlJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BusiTransferBillDtl">
+		SELECT 
+			<include refid="busiTransferBillDtlColumns"/>
+		FROM busi_transfer_bill_dtl a
+		<include refid="busiTransferBillDtlJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="transferBillId != null and transferBillId != '' and transferBillId.id != null and transferBillId.id != ''">
+				AND a.transfer_bill_id = #{transferBillId.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BusiTransferBillDtl">
+		SELECT 
+			<include refid="busiTransferBillDtlColumns"/>
+		FROM busi_transfer_bill_dtl a
+		<include refid="busiTransferBillDtlJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO busi_transfer_bill_dtl(
+			id,
+			transfer_bill_id,
+			company_id,
+			office_id,
+			asset_global_id,
+			asset_is_transfer,
+			os_platform_id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			orig_resp_person,
+			orig_place_id,
+			recv_resp_person,
+			recv_place_id
+		) VALUES (
+			#{id},
+			#{transferBillId.id},
+			#{company.id},
+			#{office.id},
+			#{assetGlobalId},
+			#{assetIsTransfer},
+			#{osPlatformId},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{origRespPerson},
+			#{origPlaceId},
+			#{recvRespPerson},
+			#{recvPlaceId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE busi_transfer_bill_dtl SET 	
+			transfer_bill_id = #{transferBillId.id},
+			company_id = #{company.id},
+			office_id = #{office.id},
+			asset_global_id = #{assetGlobalId},
+			asset_is_transfer = #{assetIsTransfer},
+			os_platform_id = #{osPlatformId},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			orig_resp_person = #{origRespPerson},
+			orig_place_id = #{origPlaceId},
+			recv_resp_person = #{recvRespPerson},
+			recv_place_id = #{recvPlaceId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE busi_transfer_bill_dtl SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE transfer_bill_id = #{transferBillId.id}
+			</otherwise>
+		</choose>
+	</update>
+	
+</mapper>

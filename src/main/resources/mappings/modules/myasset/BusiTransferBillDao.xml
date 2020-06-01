@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.BusiTransferBillDao">
+    
+	<sql id="busiTransferBillColumns">
+		a.id AS "id",
+		a.transfer_bill_no AS "transferBillNo",
+		a.company_id AS "company.id",
+		a.office_id AS "office.id",
+		a.apply_person AS "applyPerson",
+		a.transfer_num AS "transferNum",
+		a.apply_date AS "applyDate",
+		a.status AS "status",
+		a.os_platform_id AS "osPlatformId",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.oper_person AS "operPerson",
+		a.recv_resp_person AS "recvRespPerson",
+		a.recv_place_id AS "recvPlaceId",
+		company3.name AS "company.name",
+		o4.name AS "office.name"
+	</sql>
+	
+	<sql id="busiTransferBillJoins">
+		LEFT JOIN sys_office company3 ON company3.id = a.company_id
+		LEFT JOIN sys_office o4 ON o4.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="BusiTransferBill">
+		SELECT 
+			<include refid="busiTransferBillColumns"/>
+		FROM busi_transfer_bill a
+		<include refid="busiTransferBillJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BusiTransferBill">
+		SELECT 
+			<include refid="busiTransferBillColumns"/>
+		FROM busi_transfer_bill a
+		<include refid="busiTransferBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="transferBillNo != null and transferBillNo != ''">
+				AND a.transfer_bill_no = #{transferBillNo}
+			</if>
+			<if test="company != null and company.id != null and company.id != ''">
+				AND a.company_id = #{company.id}
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
+			</if>
+			<if test="applyPerson != null and applyPerson != ''">
+				AND a.apply_person = #{applyPerson}
+			</if>
+			<if test="applyDate != null and applyDate != ''">
+				AND a.apply_date = #{applyDate}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BusiTransferBill">
+		SELECT 
+			<include refid="busiTransferBillColumns"/>
+		FROM busi_transfer_bill a
+		<include refid="busiTransferBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO busi_transfer_bill(
+			id,
+			transfer_bill_no,
+			company_id,
+			office_id,
+			apply_person,
+			transfer_num,
+			apply_date,
+			status,
+			os_platform_id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			oper_person,
+			recv_resp_person,
+			recv_place_id
+		) VALUES (
+			#{id},
+			#{transferBillNo},
+			#{company.id},
+			#{office.id},
+			#{applyPerson},
+			#{transferNum},
+			#{applyDate},
+			#{status},
+			#{osPlatformId},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{operPerson},
+			#{recvRespPerson},
+			#{recvPlaceId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE busi_transfer_bill SET 	
+			transfer_bill_no = #{transferBillNo},
+			company_id = #{company.id},
+			office_id = #{office.id},
+			apply_person = #{applyPerson},
+			transfer_num = #{transferNum},
+			apply_date = #{applyDate},
+			status = #{status},
+			os_platform_id = #{osPlatformId},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			oper_person = #{operPerson},
+			recv_resp_person = #{recvRespPerson},
+			recv_place_id = #{recvPlaceId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE busi_transfer_bill SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

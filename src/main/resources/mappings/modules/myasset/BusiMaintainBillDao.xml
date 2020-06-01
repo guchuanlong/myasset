@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.myasset.dao.BusiMaintainBillDao">
+    
+	<sql id="busiMaintainBillColumns">
+		a.id AS "id",
+		a.maintain_bill_no AS "maintainBillNo",
+		a.company_id AS "company.id",
+		a.office_id AS "office.id",
+		a.apply_person AS "applyPerson",
+		a.maintain_num AS "maintainNum",
+		a.apply_date AS "applyDate",
+		a.status AS "status",
+		a.os_platform_id AS "osPlatformId",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.oper_person AS "operPerson",
+		company3.name AS "company.name",
+		o4.name AS "office.name"
+	</sql>
+	
+	<sql id="busiMaintainBillJoins">
+		LEFT JOIN sys_office company3 ON company3.id = a.company_id
+		LEFT JOIN sys_office o4 ON o4.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="BusiMaintainBill">
+		SELECT 
+			<include refid="busiMaintainBillColumns"/>
+		FROM busi_maintain_bill a
+		<include refid="busiMaintainBillJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BusiMaintainBill">
+		SELECT 
+			<include refid="busiMaintainBillColumns"/>
+		FROM busi_maintain_bill a
+		<include refid="busiMaintainBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="maintainBillNo != null and maintainBillNo != ''">
+				AND a.maintain_bill_no = #{maintainBillNo}
+			</if>
+			<if test="company != null and company.id != null and company.id != ''">
+				AND a.company_id = #{company.id}
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
+			</if>
+			<if test="applyPerson != null and applyPerson != ''">
+				AND a.apply_person = #{applyPerson}
+			</if>
+			<if test="applyDate != null and applyDate != ''">
+				AND a.apply_date = #{applyDate}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BusiMaintainBill">
+		SELECT 
+			<include refid="busiMaintainBillColumns"/>
+		FROM busi_maintain_bill a
+		<include refid="busiMaintainBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO busi_maintain_bill(
+			id,
+			maintain_bill_no,
+			company_id,
+			office_id,
+			apply_person,
+			maintain_num,
+			apply_date,
+			status,
+			os_platform_id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			oper_person
+		) VALUES (
+			#{id},
+			#{maintainBillNo},
+			#{company.id},
+			#{office.id},
+			#{applyPerson},
+			#{maintainNum},
+			#{applyDate},
+			#{status},
+			#{osPlatformId},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{operPerson}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE busi_maintain_bill SET 	
+			maintain_bill_no = #{maintainBillNo},
+			company_id = #{company.id},
+			office_id = #{office.id},
+			apply_person = #{applyPerson},
+			maintain_num = #{maintainNum},
+			apply_date = #{applyDate},
+			status = #{status},
+			os_platform_id = #{osPlatformId},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			oper_person = #{operPerson}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE busi_maintain_bill SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

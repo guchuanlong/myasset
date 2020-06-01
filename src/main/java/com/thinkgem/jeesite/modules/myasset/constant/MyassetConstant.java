@@ -40,6 +40,61 @@ public class MyassetConstant {
 		public static final String RETURN = "1";
 		
 	}
+	public static final class MaintainBillStatus {
+		//维护单状态（0-申请中；1-维护中；2-已维护）
+		
+		private MaintainBillStatus() {}
+		
+		public static final String APPLY = "0";
+		public static final String MAINTAIN = "1";
+		
+	}
+	public static final class AssetIsMaintain {
+		//资产是否归还(0-借用；1-归还)
+		
+		private AssetIsMaintain() {}
+		
+		public static final String NO = "0";
+		public static final String YES = "1";
+		
+	}
+	
+	public static final class TransferBillStatus {
+		//转移单状态（0-申请中；1-转移）
+		
+		private TransferBillStatus() {}
+		
+		public static final String APPLY = "0";
+		public static final String TRANSFER = "1";
+		
+	}
+	public static final class AssetIsTransfer {
+		//资产是否归还(0-借用；1-归还)
+		
+		private AssetIsTransfer() {}
+		
+		public static final String NO = "0";
+		public static final String YES = "1";
+		
+	}
+	public static final class ScrapBillStatus {
+		//报废单状态（0-申请中；1-报废）
+		
+		private ScrapBillStatus() {}
+		
+		public static final String APPLY = "0";
+		public static final String SCRAP = "1";
+		
+	}
+	public static final class AssetIsScrap {
+		//资产是否归还(0-借用；1-归还)
+		
+		private AssetIsScrap() {}
+		
+		public static final String NO = "0";
+		public static final String YES = "1";
+		
+	}
 	
 	public enum AssetBigClass{
 		
